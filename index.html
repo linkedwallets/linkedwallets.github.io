@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>linkedwallets — an explorer for one person</title>
+  <meta name="description" content="linkedwallets: a pseudonym with a key behind it. Essays and small tools, no trackers, no cookies.">
+  <meta name="theme-color" content="#0b0e12">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">skip to content</a>
+
+  <header class="site-head">
+    <div class="chain-strip" aria-hidden="true">
+      <div class="wrap">
+        <span class="lit">mainnet</span>
+        <span class="opt">12.1s block time</span>
+        <span class="opt">gas 0.31 gwei</span>
+        <span><span class="dot throb"></span>synced</span>
+      </div>
+    </div>
+    <div class="wrap head-grid">
+      <a class="brand" href="/" aria-label="linkedwallets — home">
+        <svg class="brand-mark" width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M32 32 L14 16 M32 32 L50 16 M32 32 L32 50" stroke="#74808e" stroke-width="4"/>
+          <circle cx="14" cy="16" r="6" fill="#0b0e12" stroke="#74808e" stroke-width="4"/>
+          <circle cx="50" cy="16" r="6" fill="#0b0e12" stroke="#74808e" stroke-width="4"/>
+          <circle cx="32" cy="50" r="6" fill="#0b0e12" stroke="#74808e" stroke-width="4"/>
+          <circle cx="32" cy="32" r="7" fill="#f2c14e"/>
+        </svg>
+        linkedwallets
+      </a>
+      <nav class="site-nav" aria-label="Site">
+        <a href="/writings/">Writings</a>
+        <a href="/projects/">Projects</a>
+        <a class="ext" href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X</a>
+      </nav>
+      <div class="head-side">
+        <form class="search" role="search" aria-label="Search this site">
+          <input type="text" name="q" placeholder="search tx / address…" aria-label="Search this site" autocomplete="off">
+        </form>
+      </div>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">menu</button>
+    </div>
+  </header>
+
+  <div class="menu-overlay" id="menu" hidden>
+    <button class="menu-btn menu-close" type="button">close ✕</button>
+    <nav aria-label="Site">
+      <a href="/"><span>0x01</span>Home</a>
+      <a href="/writings/"><span>0x02</span>Writings</a>
+      <a href="/projects/"><span>0x03</span>Projects</a>
+      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer"><span>0x04</span>X ↗</a>
+    </nav>
+    <div class="menu-foot">
+      <span>block #<span data-block>—</span></span>
+      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">@linkedwallets</a>
+    </div>
+  </div>
+
+  <main id="main">
+    <section class="hero wrap">
+      <p class="eyebrow">an explorer for one person</p>
+      <h1 class="display">linked<span class="it">wallets</span></h1>
+      <p class="hero-sub">One pseudonym, many addresses. Essays and small tools from a node somewhere on the network.</p>
+
+      <div class="graph-panel">
+        <div class="graph-bar" aria-hidden="true">
+          <span>transfer graph · <span class="lit">peers of 0x6c77…f21d</span></span>
+          <span><span class="dot throb"></span><span class="lit">mainnet · synced</span></span>
+        </div>
+        <svg class="graph" viewBox="0 0 960 440" xmlns="http://www.w3.org/2000/svg" aria-label="A graph of wallets linked to linkedwallets by transfers">
+          <title>Transfer graph: the linkedwallets address at the centre, linked to nine peer wallets.</title>
+
+          <!-- edges: centre to peers -->
+          <path class="g-edge" data-link="c n1" d="M480 230 Q590 150 700 125"/>
+          <path class="g-edge" data-link="c n2" d="M480 230 Q640 215 800 265"/>
+          <path class="g-edge" data-link="c n3" d="M480 230 Q610 330 695 385"/>
+          <path class="g-edge" data-link="c n4" d="M480 230 Q508 315 480 395"/>
+          <path class="g-edge" data-link="c n5" d="M480 230 Q350 325 250 370"/>
+          <path class="g-edge" data-link="c n6" d="M480 230 Q315 200 150 225"/>
+          <path class="g-edge" data-link="c n7" d="M480 230 Q340 150 240 110"/>
+          <path class="g-edge" data-link="c n8" d="M480 230 Q438 140 400 85"/>
+          <path class="g-edge" data-link="c n9" d="M480 230 Q556 135 590 70"/>
+          <!-- edges: peer to peer -->
+          <path class="g-edge" data-link="n1 n2" d="M700 125 Q770 170 800 265"/>
+          <path class="g-edge" data-link="n1 n8" d="M400 85 Q550 60 700 125"/>
+          <path class="g-edge" data-link="n5 n6" d="M250 370 Q182 315 150 225"/>
+          <path class="g-edge" data-link="n3 n5" d="M695 385 Q470 415 250 370"/>
+          <path class="g-edge" data-link="n7 n8" d="M240 110 Q318 72 400 85"/>
+
+          <!-- transfers running along the edges -->
+          <path class="g-pulse" data-link="c n1" style="animation-delay:-0.6s"  d="M480 230 Q590 150 700 125"/>
+          <path class="g-pulse" data-link="c n2" style="animation-delay:-4.2s"  d="M480 230 Q640 215 800 265"/>
+          <path class="g-pulse" data-link="c n3" style="animation-delay:-2.1s"  d="M480 230 Q610 330 695 385"/>
+          <path class="g-pulse" data-link="c n4" style="animation-delay:-6.8s"  d="M480 230 Q508 315 480 395"/>
+          <path class="g-pulse" data-link="c n5" style="animation-delay:-3.4s"  d="M480 230 Q350 325 250 370"/>
+          <path class="g-pulse" data-link="c n6" style="animation-delay:-1.3s"  d="M480 230 Q315 200 150 225"/>
+          <path class="g-pulse" data-link="c n7" style="animation-delay:-5.5s"  d="M480 230 Q340 150 240 110"/>
+          <path class="g-pulse" data-link="c n8" style="animation-delay:-7.4s"  d="M480 230 Q438 140 400 85"/>
+          <path class="g-pulse" data-link="c n9" style="animation-delay:-2.8s"  d="M480 230 Q556 135 590 70"/>
+          <path class="g-pulse" data-link="n1 n2" style="animation-delay:-1.9s" d="M700 125 Q770 170 800 265"/>
+          <path class="g-pulse" data-link="n1 n8" style="animation-delay:-6.1s" d="M400 85 Q550 60 700 125"/>
+          <path class="g-pulse" data-link="n5 n6" style="animation-delay:-4.7s" d="M250 370 Q182 315 150 225"/>
+          <path class="g-pulse" data-link="n3 n5" style="animation-delay:-0.3s" d="M695 385 Q470 415 250 370"/>
+          <path class="g-pulse" data-link="n7 n8" style="animation-delay:-3.9s" d="M240 110 Q318 72 400 85"/>
+
+          <!-- amounts on a few edges -->
+          <text class="g-amount" x="646" y="222">2.4</text>
+          <text class="g-amount" x="352" y="322">0.05</text>
+          <text class="g-amount" x="444" y="150">∞</text>
+          <text class="g-amount" x="462" y="411">12.5</text>
+
+          <!-- peer wallets -->
+          <g class="g-node" data-node="n1" tabindex="0">
+            <circle cx="700" cy="125" r="5"/>
+            <circle class="hit" cx="700" cy="125" r="16"/>
+            <text x="712" y="121">0xc0ffee…</text>
+          </g>
+          <g class="g-node" data-node="n2" tabindex="0">
+            <circle cx="800" cy="265" r="5"/>
+            <circle class="hit" cx="800" cy="265" r="16"/>
+            <text x="812" y="269">0xbadc0de…</text>
+          </g>
+          <g class="g-node" data-node="n3" tabindex="0">
+            <circle cx="695" cy="385" r="5"/>
+            <circle class="hit" cx="695" cy="385" r="16"/>
+            <text x="680" y="409">0xdead10cc…</text>
+          </g>
+          <g class="g-node" data-node="n4" tabindex="0">
+            <circle cx="480" cy="395" r="5"/>
+            <circle class="hit" cx="480" cy="395" r="16"/>
+            <text x="480" y="419" text-anchor="middle">0xdec0de…</text>
+          </g>
+          <g class="g-node" data-node="n5" tabindex="0">
+            <circle cx="250" cy="370" r="5"/>
+            <circle class="hit" cx="250" cy="370" r="16"/>
+            <text x="228" y="393">0xfacade…</text>
+          </g>
+          <g class="g-node" data-node="n6" tabindex="0">
+            <circle cx="150" cy="225" r="5"/>
+            <circle class="hit" cx="150" cy="225" r="16"/>
+            <text x="138" y="229" text-anchor="end">…5afe</text>
+          </g>
+          <g class="g-node" data-node="n7" tabindex="0">
+            <circle cx="240" cy="110" r="5"/>
+            <circle class="hit" cx="240" cy="110" r="16"/>
+            <text x="216" y="96">0xba5ed…</text>
+          </g>
+          <g class="g-node" data-node="n8" tabindex="0">
+            <circle cx="400" cy="85" r="5"/>
+            <circle class="hit" cx="400" cy="85" r="16"/>
+            <text x="400" y="69" text-anchor="middle">0xfeed…</text>
+          </g>
+          <g class="g-node" data-node="n9" tabindex="0">
+            <circle cx="590" cy="70" r="5"/>
+            <circle class="hit" cx="590" cy="70" r="16"/>
+            <text x="590" y="54" text-anchor="middle">0xd00d…</text>
+          </g>
+
+          <!-- the person -->
+          <g class="g-node g-center" data-node="c" tabindex="0">
+            <circle class="halo" cx="480" cy="230" r="11"/>
+            <circle class="hit" cx="480" cy="230" r="18"/>
+            <circle class="core" cx="480" cy="230" r="10"/>
+            <text x="480" y="262" text-anchor="middle">linkedwallets</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <section class="intro measure">
+        <p>I go by <em>linkedwallets</em> — a handle with a key behind it. This site is the explorer for that one entity: short essays under Writings, small tools under Projects, and nothing for sale anywhere.</p>
+        <p>There is no About page with a face. The paragraphs you are reading are as close to doxxing as this chain gets: a pseudonym, a way to verify it, and whatever the words turn out to be worth on their own.</p>
+        <p>Everything here is static files served from a branch. No trackers, no cookies, no analytics. The only thing this site counts is blocks.</p>
+      </section>
+
+      <section class="measure" aria-labelledby="latest">
+        <h2 class="section-label" id="latest">Latest transfers <a class="more" href="/writings/">all writings →</a></h2>
+        <div class="tx-list">
+          <a class="tx-row" href="/writings/a-name-you-can-verify/">
+            <span class="tx-hash">tx 0x7c1d…94af</span>
+            <span>
+              <span class="tx-title">A name you can verify</span>
+              <span class="tx-dek">Pseudonyms get called fake names. A name you can sign with is the most durable name there is.</span>
+            </span>
+            <span class="tx-meta"><span class="lit">block 21,558,192</span><br>Oct 17, 2026 · 7 min</span>
+          </a>
+          <a class="tx-row" href="/writings/notes-on-block-space/">
+            <span class="tx-hash">tx 0x3b90…2c61</span>
+            <span>
+              <span class="tx-title">Notes on block space</span>
+              <span class="tx-dek">Every byte competes with every other byte. What a scarce page teaches you about writing.</span>
+            </span>
+            <span class="tx-meta"><span class="lit">block 21,470,231</span><br>Oct 8, 2026 · 5 min</span>
+          </a>
+          <a class="tx-row" href="/writings/change-addresses/">
+            <span class="tx-hash">tx 0x9e44…f7a1</span>
+            <span>
+              <span class="tx-title">Change addresses</span>
+              <span class="tx-dek">When a wallet spends, what is left over lands somewhere new. Notes on starting pockets over.</span>
+            </span>
+            <span class="tx-meta"><span class="lit">block 21,382,650</span><br>Sep 29, 2026 · 6 min</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="measure" aria-labelledby="contracts">
+        <h2 class="section-label" id="contracts">Deployed contracts <a class="more" href="/projects/">all projects →</a></h2>
+        <div class="tx-list">
+          <a class="tx-row" href="/projects/#sparse-forest">
+            <span class="tx-hash">0x5f0e…9c02</span>
+            <span>
+              <span class="tx-title">sparse-forest</span>
+              <span class="tx-dek">A tiny sparse Merkle tree you can hold in your head — and in 4 KB.</span>
+            </span>
+            <span class="tx-meta"><span class="lit">rust</span><br>deployed</span>
+          </a>
+          <a class="tx-row" href="/projects/#mempool-weather">
+            <span class="tx-hash">0xBa5e…d10c</span>
+            <span>
+              <span class="tx-title">mempool.weather</span>
+              <span class="tx-dek">Fee forecasts as weather. Storms at 30 gwei, clear skies below five.</span>
+            </span>
+            <span class="tx-meta"><span class="lit">go</span><br>building</span>
+          </a>
+          <a class="tx-row" href="/projects/#dust">
+            <span class="tx-hash">0x400d…c0de</span>
+            <span>
+              <span class="tx-title">dust</span>
+              <span class="tx-dek">A sweeper for forgotten UTXOs. Small change deserves a home too.</span>
+            </span>
+            <span class="tx-meta"><span class="lit">python</span><br>deployed</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-foot">
+    <div class="wrap foot-grid">
+      <div class="who">linkedwallets — pseudonymous by design, signed by default.</div>
+      <div class="foot-links">
+        <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
+        <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
+      </div>
+    </div>
+    <div class="foot-strip">
+      <div class="wrap">
+        <span>block #<span data-block>—</span></span>
+        <span><span class="dot throb"></span>synced</span>
+        <span>no cookies · no analytics</span>
+        <span>hand-rolled html</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>
