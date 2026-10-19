@@ -678,6 +678,15 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
   .page-head > .part, .writing-head > .part, .page-head .label { margin-right: 6.6rem; }
 }
 
+@media (max-width: 1100px) {
+  html.js .nv:not(.still) .nv-map figcaption { bottom: 4.2rem; }
+}
+
+/* a tall screen: the intro sits on top, the map under it (map.js and scene.js switch below 4:5) */
+@media (max-aspect-ratio: 4/5) {
+  html.js .nv:not(.still) .nv-intro { top: 4.2rem; transform: none; }
+}
+
 @media (max-width: 760px) {
   .parts { grid-template-columns: minmax(0, 1fr); }
   html.js .nv:not(.still) .nv-intro { top: 4.2rem; transform: none; }

@@ -110,8 +110,7 @@ function layout() {
     ox = (W - 360 * k) / 2;
     cy = H / 2;
   }
-  const c = at.c;
-  home = c ? { x: bx(c.lon), y: by(c.lat) } : { x: W / 2, y: H / 2 };
+  home = { x: bx(at.c.lon), y: by(at.c.lat) };
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(W * dpr);
   canvas.height = Math.round(H * dpr);
@@ -126,7 +125,7 @@ function layout() {
     if (tall) {
       // The map sits in the room between the intro and the caption.
       cy = clamp((a.bottom - b.top + H - 110) / 2, H * 0.45, H * 0.7);
-      home.y = by(at.c ? at.c.lat : MID);
+      home.y = by(at.c.lat);
     } else {
       fog = { x0: a.left - b.left, y0: a.top - b.top, x1: a.right - b.left, y1: a.bottom - b.top };
     }
@@ -225,16 +224,14 @@ function paint(px, py, s, alpha, fogged) {
 function arc(a, b, bow) {
   const dx = b.x - a.x;
   const dy = b.y - a.y;
-  const len = Math.hypot(dx, dy) || 1;
+  const len = Math.hypot(dx, dy);
   let nx = dy / len;
   let ny = -dx / len;
   if (ny > 0 || (ny === 0 && nx > 0)) {
     nx = -nx;
     ny = -ny;
   }
-  const cx = (a.x + b.x) / 2 + nx * len * bow;
-  const cyy = (a.y + b.y) / 2 + ny * len * bow;
-  return { cx, cy: cyy };
+  return { cx: (a.x + b.x) / 2 + nx * len * bow, cy: (a.y + b.y) / 2 + ny * len * bow };
 }
 
 function place(px, py, s) {
@@ -268,7 +265,6 @@ function place(px, py, s) {
 }
 
 const parts = svg ? {
-  words: svg,
   lines: svg.querySelector(".g-edges"),
   peers: svg.querySelector(".g-peers"),
   mark: svg.querySelector(".g-mark"),
