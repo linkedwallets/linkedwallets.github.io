@@ -148,8 +148,8 @@ async function start() {
   }
 
   function layout() {
-    W = stageBox.clientWidth;
-    H = stageBox.clientHeight;
+    W = canvas.clientWidth;
+    H = canvas.clientHeight;
     tall = W / H < 0.8;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, W * H > 1.4e6 ? 1.5 : 2));
     renderer.setSize(W, H, false);
@@ -341,6 +341,8 @@ async function start() {
     if (flat) {
       // Reduced motion: one drawing of the node fully apart, every part a render, all callouts open.
       draw(STOPS[2].at);
+      intro.style.opacity = "";
+      intro.style.visibility = "";
       calls.forEach((c) => {
         c.style.transform = "";
         c.style.opacity = "";
