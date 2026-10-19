@@ -1,25 +1,7 @@
 /* linkedwallets.github.io — bone-white ledger, hard rules, halftone, cobalt ink.
-   Panchang + Gambetta (Fontshare, ITF FFL) and Commit Mono (OFL), all self-hosted. */
+   Panchang + Gambetta load from Fontshare's CDN (ITF FFL forbids hosting the files here).
+   Commit Mono (OFL) is self-hosted. */
 
-@font-face {
-  font-family: "Panchang";
-  src: url("/assets/fonts/Panchang-Variable.woff2") format("woff2");
-  font-weight: 200 800;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Gambetta";
-  src: url("/assets/fonts/Gambetta-Variable.woff2") format("woff2");
-  font-weight: 300 700;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Gambetta";
-  src: url("/assets/fonts/Gambetta-VariableItalic.woff2") format("woff2");
-  font-weight: 300 700;
-  font-style: italic;
-  font-display: swap;
-}
 @font-face {
   font-family: "Commit Mono";
   src: url("/assets/fonts/CommitMono-400-Regular.woff2") format("woff2");

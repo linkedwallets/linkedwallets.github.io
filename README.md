@@ -16,9 +16,10 @@ via GitHub Pages. The block numbers tick with a little script and a fake
 
 ## Colophon
 
-Panchang (display) and Gambetta (reading), both from Fontshare under the ITF
-Free Font License, with Commit Mono (SIL OFL, via Uncut) for the chain chrome.
-All self-hosted in `assets/fonts/`, licences beside them.
+Panchang (display) and Gambetta (reading) from Fontshare, loaded from
+Fontshare's CDN as the ITF Free Font License requires for a public repo.
+Commit Mono (SIL OFL, via Uncut) for the chain chrome, self-hosted in
+`assets/fonts/` with its licence.
 Theme: a bone-white ledger with hard black rules, a halftone dot field, cobalt
 ink and a lime marker, a ⌘K explorer, and the live block number as the footer.
 Inspired by omarchy.us, yuga.com's halftone, ghost.ai, brutalistwebsites.com,
