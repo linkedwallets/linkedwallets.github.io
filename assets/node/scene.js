@@ -20,18 +20,18 @@ const BOARD_AT = new THREE.Vector3(-7.2, 17, -6);
 // (u to the right, v up, w toward the camera), for a wide screen and for a tall one.
 // turn: how the part turns as it floats out, in degrees about X, Y, Z.
 const PARTS = [
-  { id: "panelL", build: () => buildSidePanel(-1), frame: "case", wide: [-54, 0, -6], tall: [-12, 50, -8], open: [-15, 0, 0], turn: [0, 170, 0] },
-  { id: "bezel", build: buildBezel, frame: "case", wide: [-38, 1, 2], tall: [-13, 24, 0], turn: [0, -12, 0] },
-  { id: "board", build: buildBoard, frame: "board", wide: [-21, 7, -6], tall: [-9, 1, -6] },
-  { id: "psu", build: buildPsu, frame: "case", wide: [-22, -12, 4], tall: [-8, -38, 0] },
-  { id: "ram", build: buildRam, frame: "board", wide: [-8, 8, 0], tall: [9, 4, 0], turn: [0, -20, 0] },
-  { id: "cpu", build: buildCpu, frame: "board", wide: [-6, -6, 6], tall: [-10, -14, 6], turn: [0, -38, 0] },
-  { id: "cooler", build: buildCooler, frame: "board", wide: [5, 7, 0], tall: [9, -10, 0] },
-  { id: "ssd", build: buildSsd, frame: "board", wide: [5, -10, 8], tall: [2, -21, 8], turn: [0, -40, 0] },
-  { id: "key", build: buildKey, frame: "board", wide: [17, 9, 10], tall: [-10, -25, 10], turn: [0, -40, 0] },
-  { id: "nic", build: buildNic, frame: "board", wide: [18, -7, 6], tall: [6, -31, 6], turn: [0, -35, 90] },
-  { id: "chassis", build: buildChassis, frame: "case", wide: [34, 0, -8], tall: [12, 24, -8] },
-  { id: "panelR", build: () => buildSidePanel(1), frame: "case", wide: [52, 0, -4], tall: [12, 50, -4], open: [15, 0, 0] },
+  { id: "panelL", build: () => buildSidePanel(-1), frame: "case", wide: [-48, 0, -6], tall: [-12, 50, -8], open: [-15, 0, 0], turn: [0, 170, 0] },
+  { id: "bezel", build: buildBezel, frame: "case", wide: [-32, 0, 0], tall: [-13, 24, 0], turn: [0, -12, 0] },
+  { id: "board", build: buildBoard, frame: "board", wide: [-15, 7, -6], tall: [-9, 1, -6] },
+  { id: "psu", build: buildPsu, frame: "case", wide: [-15, -13, 4], tall: [-8, -38, 0] },
+  { id: "ram", build: buildRam, frame: "board", wide: [-3, 9, 0], tall: [9, 4, 0], turn: [0, -20, 0] },
+  { id: "cpu", build: buildCpu, frame: "board", wide: [-2, -3, 6], tall: [-10, -14, 6], turn: [0, -38, 0] },
+  { id: "cooler", build: buildCooler, frame: "board", wide: [8, 8, 0], tall: [9, -10, 0] },
+  { id: "ssd", build: buildSsd, frame: "board", wide: [-1, -12, 8], tall: [2, -21, 8], turn: [0, -40, 0] },
+  { id: "key", build: buildKey, frame: "board", wide: [8, -3, 10], tall: [-10, -25, 10], turn: [0, -40, 0] },
+  { id: "nic", build: buildNic, frame: "board", wide: [12, -13, 6], tall: [6, -31, 6], turn: [0, -35, 90] },
+  { id: "chassis", build: buildChassis, frame: "case", wide: [31, 0, -8], tall: [12, 24, -8] },
+  { id: "panelR", build: () => buildSidePanel(1), frame: "case", wide: [49, 0, -4], tall: [12, 50, -4], open: [15, 0, 0] },
 ];
 
 // The parts that the camera visits, in order, with the name used by the callouts.
