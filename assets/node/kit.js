@@ -208,48 +208,138 @@ export function many(geo, mat, positions) {
 const EDGE_ANGLE = 32;
 
 function edgesOf(m) {
-  const base = m.geometry.userData.rbox ? rboxEdges(m.geometry.userData.rbox) : new THREE.EdgesGeometry(m.geometry, m.userData.edgeAngle || EDGE_ANGLE);
-  if (!m.isInstancedMesh) return base;
-  const src = base.attributes.position.array;
-  const out = new Float32Array(src.length * m.count);
-  const mat = new THREE.Matrix4();
-  const v = new THREE.Vector3();
-  for (let i = 0; i < m.count; i++) {
-    m.getMatrixAt(i, mat);
-    for (let j = 0; j < src.length; j += 3) {
-      v.set(src[j], src[j + 1], src[j + 2]).applyMatrix4(mat);
-      out.set([v.x, v.y, v.z], i * src.length + j);
-    }
-  }
-  const g = new THREE.BufferGeometry();
-  g.setAttribute("position", new THREE.BufferAttribute(out, 3));
-  return g;
+  return m.geometry.userData.rbox ? rboxEdges(m.geometry.userData.rbox) : new THREE.EdgesGeometry(m.geometry, m.userData.edgeAngle || EDGE_ANGLE);
 }
 
-// Adds a line drawing to every mesh of a part (skip a mesh with userData.edges = false).
-// Returns the part's look: its render materials and its one line material.
+// Each placement of a mesh relative to the part: one, or one per instance.
+function placements(m, rel) {
+  if (!m.isInstancedMesh) return [rel.clone()];
+  const out = [];
+  const im = new THREE.Matrix4();
+  for (let i = 0; i < m.count; i++) {
+    m.getMatrixAt(i, im);
+    out.push(new THREE.Matrix4().multiplyMatrices(rel, im));
+  }
+  return out;
+}
+
+// One geometry from many placed pieces: position, normal, uv, with one index.
+function merge(pieces) {
+  let nv = 0;
+  let ni = 0;
+  pieces.forEach(([g]) => {
+    nv += g.attributes.position.count;
+    ni += g.index ? g.index.count : g.attributes.position.count;
+  });
+  const pos = new Float32Array(nv * 3);
+  const nor = new Float32Array(nv * 3);
+  const uv = new Float32Array(nv * 2);
+  const idx = new Uint32Array(ni);
+  const nm = new THREE.Matrix3();
+  const v = new THREE.Vector3();
+  let ov = 0;
+  let oi = 0;
+  pieces.forEach(([geo, mx]) => {
+    let g = geo;
+    if (!g.attributes.normal) {
+      g = g.clone();
+      g.computeVertexNormals();
+    }
+    const p = g.attributes.position;
+    const n = g.attributes.normal;
+    const t = g.attributes.uv;
+    nm.getNormalMatrix(mx);
+    for (let i = 0; i < p.count; i++) {
+      v.fromBufferAttribute(p, i).applyMatrix4(mx);
+      pos.set([v.x, v.y, v.z], (ov + i) * 3);
+      if (n) {
+        v.fromBufferAttribute(n, i).applyMatrix3(nm).normalize();
+        nor.set([v.x, v.y, v.z], (ov + i) * 3);
+      }
+      if (t) uv.set([t.getX(i), t.getY(i)], (ov + i) * 2);
+    }
+    const count = g.index ? g.index.count : p.count;
+    const flip = mx.determinant() < 0;
+    for (let i = 0; i < count; i += 3) {
+      const a = g.index ? g.index.getX(i) : i;
+      const b = g.index ? g.index.getX(i + 1) : i + 1;
+      const c = g.index ? g.index.getX(i + 2) : i + 2;
+      idx[oi + i] = ov + a;
+      idx[oi + i + 1] = ov + (flip ? c : b);
+      idx[oi + i + 2] = ov + (flip ? b : c);
+    }
+    ov += p.count;
+    oi += count;
+  });
+  const out = new THREE.BufferGeometry();
+  out.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+  out.setAttribute("normal", new THREE.BufferAttribute(nor, 3));
+  out.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+  out.setIndex(new THREE.BufferAttribute(idx, 1));
+  out.computeBoundingSphere();
+  out.computeBoundingBox();
+  return out;
+}
+
+// Turns a built part into its two looks, with few draw calls: the meshes merge into one mesh
+// per material, and every edge of the part goes into one line drawing (skip a mesh with
+// userData.edges = false). Returns the part's look: its materials, meshes and lines.
 export function outline(group) {
   const line = new THREE.LineBasicMaterial({ color: BLUEPRINT, transparent: true, opacity: 0, depthWrite: false });
-  const mats = new Set();
-  const meshes = [];
-  const lines = [];
   group.updateMatrixWorld(true);
+  const toPart = new THREE.Matrix4().copy(group.matrixWorld).invert();
+  const found = [];
   group.traverse((o) => {
-    if (!o.isMesh) return;
-    meshes.push(o);
-    (Array.isArray(o.material) ? o.material : [o.material]).forEach((m) => {
-      m.transparent = true;
-      mats.add(m);
-    });
+    if (o.isMesh) found.push(o);
   });
+  const byMat = new Map();
+  const kept = [];
+  const edges = [];
+  const v = new THREE.Vector3();
+  found.forEach((m) => {
+    const rel = new THREE.Matrix4().multiplyMatrices(toPart, m.matrixWorld);
+    const where = placements(m, rel);
+    if (m.userData.edges !== false) {
+      const e = edgesOf(m).attributes.position;
+      where.forEach((mx) => {
+        for (let i = 0; i < e.count; i++) {
+          v.fromBufferAttribute(e, i).applyMatrix4(mx);
+          edges.push(v.x, v.y, v.z);
+        }
+      });
+    }
+    if (m.renderOrder !== 0 || Array.isArray(m.material)) {
+      kept.push([m, rel]);
+      return;
+    }
+    if (!byMat.has(m.material)) byMat.set(m.material, []);
+    where.forEach((mx) => byMat.get(m.material).push([m.geometry, mx]));
+  });
+
+  group.clear();
+  const meshes = [];
+  byMat.forEach((pieces, mat) => {
+    const m = new THREE.Mesh(merge(pieces), mat);
+    group.add(m);
+    meshes.push(m);
+  });
+  kept.forEach(([m, rel]) => {
+    m.removeFromParent();
+    rel.decompose(m.position, m.quaternion, m.scale);
+    group.add(m);
+    meshes.push(m);
+  });
+  const mats = new Set();
   meshes.forEach((m) => {
-    if (m.userData.edges === false) return;
-    const l = new THREE.LineSegments(edgesOf(m), line);
-    l.visible = false;
-    m.add(l);
-    lines.push(l);
+    m.material.transparent = true;
+    mats.add(m.material);
   });
-  return { meshes, lines, line, mats: Array.from(mats) };
+  const g = new THREE.BufferGeometry();
+  g.setAttribute("position", new THREE.Float32BufferAttribute(edges, 3));
+  const drawing = new THREE.LineSegments(g, line);
+  drawing.visible = false;
+  group.add(drawing);
+  return { meshes, lines: [drawing], line, mats: Array.from(mats) };
 }
 
 // 1 = the full render, 0 = the blueprint only.
