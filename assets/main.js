@@ -4,6 +4,16 @@
 (function () {
   "use strict";
 
+  // The header sticks to the top; a hairline shows once the page has scrolled.
+  var head = document.querySelector(".site-head");
+  function markScrolled() {
+    head.classList.toggle("scrolled", window.scrollY > 0);
+  }
+  if (head) {
+    markScrolled();
+    window.addEventListener("scroll", markScrolled, { passive: true });
+  }
+
   // A pretend chain: slot 440,000,000 at 2026-10-01T00:00:00Z, one slot per 400 ms.
   var GENESIS = Date.UTC(2026, 9, 1);
   var BASE_SLOT = 440000000;

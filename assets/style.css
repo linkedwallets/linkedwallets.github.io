@@ -33,6 +33,7 @@
   --serif: "Gambetta", Georgia, serif;
   --mono: "Commit Mono", ui-monospace, monospace;
   --pad: clamp(1rem, 3.2vw, 2.25rem);
+  --head-h: 3.75rem;
   --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -59,7 +60,7 @@ html[data-theme="dark"] {
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--head-h); }
 
 body {
   margin: 0;
@@ -158,15 +159,27 @@ a:hover { color: var(--orange); }
 /* ---------- header ---------- */
 
 .site-head {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: 20;
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  padding-block: 1rem;
+  height: var(--head-h);
+  max-width: none;
+  padding-inline: max(var(--pad), calc((100% - 88rem) / 2 + var(--pad)));
   font-size: 0.8rem;
+  background: var(--paper);
+  border-bottom: 1px solid transparent;
 }
-.site-head.over { position: absolute; top: 0; left: 0; right: 0; }
+@supports (background: color-mix(in srgb, red 50%, transparent)) {
+  .site-head {
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+  }
+}
+.site-head.scrolled { border-bottom-color: var(--rule); }
 .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; text-decoration: none; }
 .chain { color: var(--mute); font-family: var(--mono); font-size: 0.72rem; }
 .chain .sh { width: 6px; height: 6px; margin-right: 0.35rem; background: var(--orange); }
@@ -239,8 +252,13 @@ html[data-theme="dark"] .t-btn i { background: currentColor; }
 .nv-stage { position: relative; overflow: hidden; display: flex; flex-direction: column; }
 .nv-gl { display: none; }
 
-html.js .nv:not(.still) { height: 782vh; height: 782svh; }
-html.js .nv:not(.still) .nv-stage { position: sticky; top: 0; height: 100vh; height: 100svh; }
+html.js .nv:not(.still) { height: calc(782vh - var(--head-h)); height: calc(782svh - var(--head-h)); }
+html.js .nv:not(.still) .nv-stage {
+  position: sticky;
+  top: var(--head-h);
+  height: calc(100vh - var(--head-h));
+  height: calc(100svh - var(--head-h));
+}
 html.js .nv:not(.still) .nv-gl { display: block; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
 .nv-intro {
@@ -549,7 +567,7 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
 .list-card .tx-dek { font-size: 0.95rem; }
 
 .contract-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-.contract { scroll-margin-top: 1rem; padding-bottom: 1.3rem; }
+.contract { scroll-margin-top: calc(var(--head-h) + 1rem); padding-bottom: 1.3rem; }
 .contract:target { box-shadow: inset 0 0 0 2px var(--orange); }
 .contract-head { display: flex; align-items: center; gap: 0.8rem; border-bottom: 1px solid var(--rule); padding-bottom: 0.8rem; }
 .contract h2 { margin: 0; font-size: 1.1rem; font-weight: 500; }
@@ -595,7 +613,7 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
   align-items: start;
 }
 
-.receipt { position: sticky; top: 1rem; font-size: 0.78rem; padding-bottom: 0.4rem; }
+.receipt { position: sticky; top: calc(var(--head-h) + 1rem); font-size: 0.78rem; padding-bottom: 0.4rem; }
 .receipt::before {
   content: "transaction receipt";
   display: block;
@@ -738,12 +756,12 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
 
 /* a tall screen: the intro sits on top, the map under it (map.js and scene.js switch below 4:5) */
 @media (max-aspect-ratio: 4/5) {
-  html.js .nv:not(.still) .nv-intro { top: 4.2rem; transform: none; }
+  html.js .nv:not(.still) .nv-intro { top: 0.8rem; transform: none; }
 }
 
 @media (max-width: 760px) {
   .parts { grid-template-columns: minmax(0, 1fr); }
-  html.js .nv:not(.still) .nv-intro { top: 4.2rem; transform: none; }
+  html.js .nv:not(.still) .nv-intro { top: 0.8rem; transform: none; }
   html.js .nv:not(.still) .nv-map figcaption { bottom: 5.6rem; }
   .nv.still .nv-map { aspect-ratio: 230 / 170; }
   html.js .nv:not(.still) .nv-cue { bottom: 3.6rem; }

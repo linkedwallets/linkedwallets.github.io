@@ -344,8 +344,13 @@ async function start() {
     renderer.render(scene, camera);
   }
 
+  // The sticky stage sits under the header: it sticks when the section top reaches this offset.
+  function stageTop() {
+    return parseFloat(getComputedStyle(stageBox).top) || 0;
+  }
+
   function progress() {
-    const top = root.getBoundingClientRect().top;
+    const top = root.getBoundingClientRect().top - stageTop();
     const room = root.offsetHeight - stageBox.offsetHeight;
     return room > 0 ? clamp(-top / room) * END : 0;
   }
@@ -417,7 +422,7 @@ async function start() {
       ev.preventDefault();
       const stop = VISITS[n];
       const room = root.offsetHeight - stageBox.offsetHeight;
-      const top = root.getBoundingClientRect().top + window.scrollY;
+      const top = root.getBoundingClientRect().top + window.scrollY - stageTop();
       window.scrollTo({ top: top + ((stop.at + stop.hold / 2) / END) * room, behavior: "smooth" });
     });
   });
