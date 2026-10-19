@@ -4,13 +4,13 @@
 (function () {
   "use strict";
 
-  // A pretend chain: block 21,470,000 at 2026-10-01T00:00:00Z, one block per 12.1s.
+  // A pretend chain: slot 440,000,000 at 2026-10-01T00:00:00Z, one slot per 400 ms.
   var GENESIS = Date.UTC(2026, 9, 1);
-  var BASE_BLOCK = 21470000;
-  var BLOCK_MS = 12100;
+  var BASE_SLOT = 440000000;
+  var SLOT_MS = 400;
 
-  function blockNow() {
-    return BASE_BLOCK + Math.floor((Date.now() - GENESIS) / BLOCK_MS);
+  function slotNow() {
+    return BASE_SLOT + Math.floor((Date.now() - GENESIS) / SLOT_MS);
   }
 
   function fmt(n) {
@@ -18,33 +18,33 @@
   }
 
   function tickChain() {
-    var block = blockNow();
-    var nodes = document.querySelectorAll("[data-block]");
-    for (var i = 0; i < nodes.length; i++) nodes[i].textContent = fmt(block);
+    var slot = slotNow();
+    var nodes = document.querySelectorAll("[data-slot]");
+    for (var i = 0; i < nodes.length; i++) nodes[i].textContent = fmt(slot);
 
     var confs = document.querySelectorAll("[data-conf-base]");
     for (var j = 0; j < confs.length; j++) {
       var base = parseInt(confs[j].getAttribute("data-conf-base"), 10);
-      confs[j].textContent = fmt(Math.max(0, block - base));
+      confs[j].textContent = fmt(Math.max(0, slot - base));
     }
   }
 
   tickChain();
-  setInterval(tickChain, 1000);
+  setInterval(tickChain, 400);
 
   // The explorer: a ⌘K palette that indexes exactly one person. It is also the menu.
   var INDEX = [
-    ["Home", "/", "0x01"],
-    ["Writings", "/writings/", "0x02"],
+    ["Home", "/", "01"],
+    ["Writings", "/writings/", "02"],
     ["A name you can verify", "/writings/a-name-you-can-verify/", "tx"],
     ["Notes on block space", "/writings/notes-on-block-space/", "tx"],
     ["Change addresses", "/writings/change-addresses/", "tx"],
-    ["Projects", "/projects/", "0x03"],
-    ["sparse-forest", "/projects/#sparse-forest", "ct"],
-    ["mempool.weather", "/projects/#mempool-weather", "ct"],
-    ["dust", "/projects/#dust", "ct"],
-    ["hexwords", "/projects/#hexwords", "ct"],
-    ["X ↗ @linkedwallets", "https://x.com/linkedwallets", "0x04"],
+    ["Projects", "/projects/", "03"],
+    ["sparse-forest", "/projects/#sparse-forest", "prg"],
+    ["mempool.weather", "/projects/#mempool-weather", "prg"],
+    ["dust", "/projects/#dust", "prg"],
+    ["hexwords", "/projects/#hexwords", "prg"],
+    ["X ↗ @linkedwallets", "https://x.com/linkedwallets", "04"],
     ["source ↗", "https://github.com/linkedwallets/linkedwallets.github.io", "src"],
   ];
 
@@ -183,7 +183,7 @@
     }, 8000);
   }
 
-  // 404: show which path reverted.
+  // 404: show which path failed.
   var slots = document.querySelectorAll("[data-path]");
   for (var sp = 0; sp < slots.length; sp++) {
     slots[sp].textContent = window.location.pathname || "/";

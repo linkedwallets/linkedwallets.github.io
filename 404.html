@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>404 — reverted — linkedwallets</title>
-  <meta name="description" content="Execution reverted: no contract at this address.">
+  <title>404 — failed — linkedwallets</title>
+  <meta name="description" content="Transaction failed: no program at this address.">
   <meta name="theme-color" content="#e4e2dd">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com">
@@ -18,7 +18,7 @@
 
   <header class="site-head wrap">
     <a class="brand" href="/" aria-label="linkedwallets — home"><i class="sh bu"></i>linkedwallets</a>
-    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>block #<span data-block>—</span></span>
+    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>slot #<span data-slot>—</span></span>
     <nav class="site-nav" aria-label="Site">
       <a href="/writings/">Writings</a>
       <a href="/projects/">Projects</a>
@@ -32,7 +32,7 @@
       <div class="pal-top"><span>explorer · indexes one person</span><button class="pal-x" type="button">esc ✕</button></div>
       <input type="text" placeholder="search tx / address / page…" aria-label="Search this site" autocomplete="off" spellcheck="false">
       <ul class="pal-list"></ul>
-      <div class="pal-foot"><span>block #<span data-block>—</span></span><span>↑↓ move · ↵ open</span></div>
+      <div class="pal-foot"><span>slot #<span data-slot>—</span></span><span>↑↓ move · ↵ open</span></div>
     </div>
   </div>
 
@@ -49,19 +49,19 @@
       <g class="g-node"><rect class="s" x="414" y="114" width="12" height="12"/><text x="434" y="124">/</text></g>
       <g class="g-node"><rect class="s" x="434" y="194" width="12" height="12" stroke-dasharray="2 2"/><text x="454" y="204" data-path>/</text></g>
       <g class="g-node"><polygon class="s" points="90,62 98,76 82,76"/><text x="90" y="52" text-anchor="middle">/writings/</text></g>
-      <text class="g-amount" x="300" y="226">no contract at this address</text>
+      <text class="g-amount" x="300" y="226">no program at this address</text>
     </svg>
     <div class="card">
       <svg class="mininode" viewBox="0 0 150 80" role="img" aria-label="no part at this address"><path class="b" d="M4 22h22v52h-22zM4 22l8.4 -6h22l-8.4 6zM26 22l8.4 -6v52l-8.4 6z"/><path class="b" d="M40 62h32v6h-32zM40 62l2.8 -2h32l-2.8 2zM72 62l2.8 -2v6l-2.8 2z"/><path class="b" d="M48 34h15v15h-15zM48 34l2.1 -1.5h15l-2.1 1.5zM63 34l2.1 -1.5v15l-2.1 1.5z"/><path class="b" d="M84 44h30v20h-30zM84 44l2.1 -1.5h30l-2.1 1.5zM114 44l2.1 -1.5v20l-2.1 1.5zM114 44v26"/><path class="b" d="M128 36h9v8h-9zM128 36l1.4 -1h9l-1.4 1zM137 36l1.4 -1v8l-1.4 1z"/></svg>
       <p class="part"><b>—</b> / 05 · part missing</p>
       <p class="label"><i class="sh hx"></i>&nbsp; status 404</p>
-      <h1>revert</h1>
+      <h1>failed</h1>
       <div class="revert-panel">
-        <span class="err">execution reverted</span>: no contract at this address<br><br>
-        call <span data-path>/</span><br>
-        status <span class="err">404</span> · gas consumed, nothing returned
+        <span class="err">ProgramAccountNotFound</span>: no program at this address<br><br>
+        invoke <span data-path>/</span><br>
+        status <span class="err">404</span> · fee paid, nothing returned
       </div>
-      <p class="hero-sub">The page you asked for was reorged out, never mined, or spent elsewhere.</p>
+      <p class="hero-sub">The page you asked for was dropped, never landed, or expired with its blockhash.</p>
       <a class="cta" href="/">return to the genesis block →</a>
     </div>
   </main>
@@ -75,7 +75,7 @@
       <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
       <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
     </nav>
-    <span class="chainline"><span><i class="sh ci throb"></i>mainnet · synced · block #<span data-block>—</span></span><span>12.1s block time · gas 0.31 gwei</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
+    <span class="chainline"><span><i class="sh ci throb"></i>mainnet-beta · caught up · slot #<span data-slot>—</span></span><span>400ms slot time · fee 5,000 lamports</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
   </footer>
 
   <script src="/assets/main.js"></script>

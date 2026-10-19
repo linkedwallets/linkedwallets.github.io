@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Projects — linkedwallets</title>
-  <meta name="description" content="Small tools and contracts by linkedwallets: a sparse Merkle library, a fee forecast as weather, a dust sweeper, a hexword generator.">
+  <meta name="description" content="Small tools and programs by linkedwallets: a sparse Merkle library, a fee forecast as weather, a dust sweeper, a vanity-address generator.">
   <meta name="theme-color" content="#e4e2dd">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com">
@@ -18,7 +18,7 @@
 
   <header class="site-head wrap">
     <a class="brand" href="/" aria-label="linkedwallets — home"><i class="sh bu"></i>linkedwallets</a>
-    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>block #<span data-block>—</span></span>
+    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>slot #<span data-slot>—</span></span>
     <nav class="site-nav" aria-label="Site">
       <a href="/writings/">Writings</a>
       <a href="/projects/" aria-current="page">Projects</a>
@@ -32,16 +32,16 @@
       <div class="pal-top"><span>explorer · indexes one person</span><button class="pal-x" type="button">esc ✕</button></div>
       <input type="text" placeholder="search tx / address / page…" aria-label="Search this site" autocomplete="off" spellcheck="false">
       <ul class="pal-list"></ul>
-      <div class="pal-foot"><span>block #<span data-block>—</span></span><span>↑↓ move · ↵ open</span></div>
+      <div class="pal-foot"><span>slot #<span data-slot>—</span></span><span>↑↓ move · ↵ open</span></div>
     </div>
   </div>
 
   <main id="main" class="page wrap">
     <header class="page-head">
       <svg class="mininode" viewBox="0 0 150 80" role="img" aria-label="part 03 of 5: cpu"><path class="b" d="M4 22h22v52h-22zM4 22l8.4 -6h22l-8.4 6zM26 22l8.4 -6v52l-8.4 6z"/><path class="b" d="M40 62h32v6h-32zM40 62l2.8 -2h32l-2.8 2zM72 62l2.8 -2v6l-2.8 2z"/><path class="on" d="M48 34h15v15h-15zM48 34l2.1 -1.5h15l-2.1 1.5zM63 34l2.1 -1.5v15l-2.1 1.5z"/><path class="b" d="M84 44h30v20h-30zM84 44l2.1 -1.5h30l-2.1 1.5zM114 44l2.1 -1.5v20l-2.1 1.5zM114 44v26"/><path class="b" d="M128 36h9v8h-9zM128 36l1.4 -1h9l-1.4 1zM137 36l1.4 -1v8l-1.4 1z"/></svg>
-      <p class="part"><b>03</b> / 05 · cpu · contracts</p>
+      <p class="part"><b>03</b> / 05 · cpu · programs</p>
       <div>
-        <p class="label"><i class="sh"></i>contracts · 4 deployed-ish</p>
+        <p class="label"><i class="sh"></i>programs · 4 deployed-ish</p>
         <h1>Projects</h1>
       </div>
       <p class="lede">Small things that live on the network, or beside it. Each one has an address, a status, and no roadmap.</p>
@@ -52,7 +52,7 @@
             <i class="sh"></i><h2>sparse-forest</h2>
             <span class="badge deployed">deployed</span>
           </div>
-          <code class="addr">0x5f0e7a1c…9c02</code>
+          <code class="addr">9xrQkbZg…YAtY</code>
           <p>A sparse Merkle tree library that fits in your head: one struct, three functions, no dependencies. Proves a leaf in 20 lines and 4 KB of state. Written for a bet that it could not be small.</p>
           <ul class="tags">
             <li>rust</li><li>no_std</li><li>merkle</li><li>1 file</li>
@@ -64,8 +64,8 @@
             <i class="sh"></i><h2>mempool.weather</h2>
             <span class="badge building">building</span>
           </div>
-          <code class="addr">0xBa5e11d0…d10c</code>
-          <p>Fee forecasts dressed as weather reports. Storms at 30 gwei, drizzle at twelve, clear skies below five. Pulls the mempool every block and answers the only question anyone actually has: do I send now or later?</p>
+          <code class="addr">6vHk2oyp…ExrH</code>
+          <p>Fee forecasts dressed as weather reports. Storms at 30,000 micro-lamports, drizzle at 12,000, clear skies below 5,000. Pulls recent priority fees every slot and answers the only question anyone actually has: do I send now or later?</p>
           <ul class="tags">
             <li>go</li><li>svg</li><li>fee market</li>
           </ul>
@@ -76,10 +76,10 @@
             <i class="sh"></i><h2>dust</h2>
             <span class="badge deployed">deployed</span>
           </div>
-          <code class="addr">0x400dc0de…c0de</code>
-          <p>A sweeper for forgotten UTXOs. Point it at a wallet full of fragments and it batches the crumbs into one spendable note, choosing the moment fees dip. Small change deserves a home too.</p>
+          <code class="addr">9FW4nEYz…GdAd</code>
+          <p>A sweeper for forgotten token accounts. Point it at a wallet full of fragments and it batches the crumbs into one transaction, choosing the moment fees dip. Small change deserves a home too.</p>
           <ul class="tags">
-            <li>python</li><li>coin selection</li><li>cli</li>
+            <li>python</li><li>spl token</li><li>cli</li>
           </ul>
         </article>
 
@@ -88,8 +88,8 @@
             <i class="sh"></i><h2>hexwords</h2>
             <span class="badge experiment">experiment</span>
           </div>
-          <code class="addr">0xfa7cade…bee4</code>
-          <p>A generator that hunts for addresses made of words — 0xc0ffee, 0xbadc0de, 0xdead10cc — and rates them by how legible they look in an explorer. This site's transfer graph is drawn from its finds.</p>
+          <code class="addr">GR8GBKwo…XGHL</code>
+          <p>A generator that hunts for addresses made of words — coffee, badcode, deadLock — and rates them by how legible they look in an explorer. This site's transfer graph is drawn from its finds.</p>
           <ul class="tags">
             <li>rust</li><li>vanity</li><li>words</li>
           </ul>
@@ -106,7 +106,7 @@
       <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
       <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
     </nav>
-    <span class="chainline"><span><i class="sh ci throb"></i>mainnet · synced · block #<span data-block>—</span></span><span>12.1s block time · gas 0.31 gwei</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
+    <span class="chainline"><span><i class="sh ci throb"></i>mainnet-beta · caught up · slot #<span data-slot>—</span></span><span>400ms slot time · fee 5,000 lamports</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
   </footer>
 
   <script src="/assets/main.js"></script>

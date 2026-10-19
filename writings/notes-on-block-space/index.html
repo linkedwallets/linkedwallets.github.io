@@ -18,7 +18,7 @@
 
   <header class="site-head wrap">
     <a class="brand" href="/" aria-label="linkedwallets — home"><i class="sh bu"></i>linkedwallets</a>
-    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>block #<span data-block>—</span></span>
+    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>slot #<span data-slot>—</span></span>
     <nav class="site-nav" aria-label="Site">
       <a href="/writings/" aria-current="page">Writings</a>
       <a href="/projects/">Projects</a>
@@ -32,7 +32,7 @@
       <div class="pal-top"><span>explorer · indexes one person</span><button class="pal-x" type="button">esc ✕</button></div>
       <input type="text" placeholder="search tx / address / page…" aria-label="Search this site" autocomplete="off" spellcheck="false">
       <ul class="pal-list"></ul>
-      <div class="pal-foot"><span>block #<span data-block>—</span></span><span>↑↓ move · ↵ open</span></div>
+      <div class="pal-foot"><span>slot #<span data-slot>—</span></span><span>↑↓ move · ↵ open</span></div>
     </div>
   </div>
 
@@ -40,36 +40,36 @@
     <div>
       <header class="writing-head">
         <svg class="mininode" viewBox="0 0 150 80" role="img" aria-label="part 02 of 5: storage"><path class="b" d="M4 22h22v52h-22zM4 22l8.4 -6h22l-8.4 6zM26 22l8.4 -6v52l-8.4 6z"/><path class="on" d="M40 62h32v6h-32zM40 62l2.8 -2h32l-2.8 2zM72 62l2.8 -2v6l-2.8 2z"/><path class="b" d="M48 34h15v15h-15zM48 34l2.1 -1.5h15l-2.1 1.5zM63 34l2.1 -1.5v15l-2.1 1.5z"/><path class="b" d="M84 44h30v20h-30zM84 44l2.1 -1.5h30l-2.1 1.5zM114 44l2.1 -1.5v20l-2.1 1.5zM114 44v26"/><path class="b" d="M128 36h9v8h-9zM128 36l1.4 -1h9l-1.4 1zM137 36l1.4 -1v8l-1.4 1z"/></svg>
-        <p class="part"><b>02</b> / 05 · storage · transfers · tx 0x3b90…2c61</p>
+        <p class="part"><b>02</b> / 05 · storage · transfers · tx 2zMW…TEY8</p>
         <a class="backlink" href="/writings/">← all writings</a>
         <h1>Notes on block space</h1>
       </header>
 
       <section class="essay">
         <div class="card receipt" aria-label="Transaction receipt">
-          <div class="receipt-row"><span class="k">tx hash</span><span class="v">0x3b90e2f76a1c88d4b0ee5c2719a344…2c61</span></div>
-          <div class="receipt-row"><span class="k">block</span><span class="v">21,470,231 · Oct 8, 2026 22:03:47 UTC</span></div>
+          <div class="receipt-row"><span class="k">signature</span><span class="v">2zMWuWeGoNFuL79ASqUGK5WCBGyqtX…TEY8</span></div>
+          <div class="receipt-row"><span class="k">slot</span><span class="v">441,710,567 · Oct 8, 2026 22:03:47 UTC</span></div>
           <div class="receipt-row"><span class="k">from</span><span class="v who">linkedwallets</span></div>
           <div class="receipt-row"><span class="k">to</span><span class="v">you, the reader</span></div>
           <div class="receipt-row"><span class="k">value</span><span class="v">0.000 — the words are free</span></div>
-          <div class="receipt-row"><span class="k">gas used</span><span class="v">21,000 (a standard transfer)</span></div>
-          <div class="receipt-row"><span class="k">status</span><span class="v ok">● confirmed · <span data-conf-base="21470231">—</span> confirmations</span></div>
+          <div class="receipt-row"><span class="k">fee</span><span class="v">5,000 lamports (one signature)</span></div>
+          <div class="receipt-row"><span class="k">status</span><span class="v ok">● finalized · <span data-conf-base="441710567">—</span> slots ago</span></div>
         </div>
 
         <article class="prose">
-          <p class="dropcap">A block is a page with a hard word limit. Every twelve seconds the network binds one, and everything in the world that wants to be remembered competes for the same few million bytes. Calldata, a swap, a wedding message, a bored ape — all of it bids against everything else for room that never gets bigger on purpose.</p>
+          <p class="dropcap">A block is a page with a hard word limit. Every four hundred milliseconds the network binds one, and everything in the world that wants to be remembered competes for the same few million bytes. Instruction data, a swap, a wedding message, a Mad Lad — all of it bids against everything else for room that never gets bigger on purpose.</p>
           <p>Writing for a page like that changes how you write. Not because a smarter style emerges, but because a price does.</p>
 
           <h2>Pay for what you mean</h2>
-          <p>Most prose is calldata. It exists to move the conversation one step forward and could be discarded after. A little of it is state: it should still be readable in thirty years, by someone with no context and no patience. The mistake is paying long-term prices for short-term bytes — publishing permanent, immutable, timestamped versions of things you would not say twice.</p>
+          <p>Most prose is instruction data. It exists to move the conversation one step forward and could be discarded after. A little of it is state: it should still be readable in thirty years, by someone with no context and no patience. The mistake is paying long-term prices for short-term bytes — publishing permanent, immutable, timestamped versions of things you would not say twice.</p>
           <blockquote>The chain does not reward the loudest writer. It rewards the one who keeps saying the same thing and keeps being right.</blockquote>
 
           <h2>Compression is a moral habit</h2>
-          <p>Watch a good contract engineer and you will see a kind of courtesy: short function names, dense events, nothing decorative. Not to save gas — well, to save gas — but the habit spills over. When every byte has a price, you learn which of your sentences were freight. It is remarkable how much of a first draft was freight.</p>
+          <p>Watch a good program engineer and you will see a kind of courtesy: short function names, dense events, nothing decorative. Not to save lamports — well, to save lamports — but the habit spills over. When every byte has a price, you learn which of your sentences were freight. It is remarkable how much of a first draft was freight.</p>
           <p>This essay, for instance, first came in at three times the size. It had a section about merkle trees. Nobody bid for it.</p>
 
           <h2>The page turns anyway</h2>
-          <p>The strange comfort of block space is that it is forgiven by time. Each block buries the last a little deeper. The mempool — the slush of everything everyone wants to say right now — is the only part that feels urgent, and it is cleared every twelve seconds forever.</p>
+          <p>The strange comfort of block space is that it is forgiven by time. Each block buries the last a little deeper. The leader's queue — the slush of everything everyone wants to say right now — is the only part that feels urgent, and it is cleared every four hundred milliseconds forever.</p>
           <p>So: write like the page has a limit, because it does. Mean what you mint. And when a paragraph turns out to be dust, let it stay unspent.</p>
         </article>
       </section>
@@ -85,7 +85,7 @@
       <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
       <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
     </nav>
-    <span class="chainline"><span><i class="sh ci throb"></i>mainnet · synced · block #<span data-block>—</span></span><span>12.1s block time · gas 0.31 gwei</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
+    <span class="chainline"><span><i class="sh ci throb"></i>mainnet-beta · caught up · slot #<span data-slot>—</span></span><span>400ms slot time · fee 5,000 lamports</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
   </footer>
 
   <script src="/assets/main.js"></script>

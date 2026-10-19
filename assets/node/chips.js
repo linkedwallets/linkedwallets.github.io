@@ -211,8 +211,8 @@ export function buildCpu() {
   const etch = ink(2.66, 2.86, (c, w, h) => {
     const k = w / 2.66;
     write(c, "LW-CPU", 0.2 * k, 0.62 * k, 0.36 * k, ETCH);
-    write(c, "contracts · 3", 0.2 * k, 0.98 * k, 0.19 * k, ETCH);
-    write(c, "0x5f0e…9c02", 0.2 * k, 1.27 * k, 0.19 * k, ETCH);
+    write(c, "programs · 3", 0.2 * k, 0.98 * k, 0.19 * k, ETCH);
+    write(c, "9xrQ…YAtY", 0.2 * k, 1.27 * k, 0.19 * k, ETCH);
     c.fillStyle = ETCH;
     c.fillRect(0.2 * k, 1.43 * k, 1.3 * k, 0.012 * k);
     matrixCode(c, 1.86 * k, 2.06 * k, 0.6 * k, 16, 5, ETCH);
@@ -416,7 +416,7 @@ export function buildSsd() {
     c.fillStyle = PRINT;
     c.fillRect(0.22 * k, 0.72 * k, w - 0.44 * k, 0.01 * k);
     write(c, "writings · 3", 0.22 * k, 1.04 * k, 0.2 * k, PRINT);
-    write(c, "tx 0x7c1d…94af", 0.22 * k, 1.33 * k, 0.18 * k, PRINT);
+    write(c, "tx 3cR8…Zrn2", 0.22 * k, 1.33 * k, 0.18 * k, PRINT);
     barcode(c, 0.22 * k, 1.5 * k, 2.7 * k, 0.2 * k, 9, PRINT);
     matrixCode(c, w - 0.85 * k, h - 0.85 * k, 0.62 * k, 18, 23, PRINT);
     c.fillStyle = ORANGE;
@@ -526,7 +526,7 @@ export function buildKey() {
     });
     c.strokeRect(X(1.02), Y(-0.1), 0.32 * k, 0.4 * k);
     write(c, "KEY", X(-1.38), Y(0.74), 0.22 * k, SILK);
-    write(c, "0x6c77…f21d", X(-0.78), Y(-0.86), 0.13 * k, SILK);
+    write(c, "4csr…VNVu", X(-0.78), Y(-0.86), 0.13 * k, SILK);
     write(c, "████████", X(0.2), Y(-0.86), 0.13 * k, SILK);
   }, 260);
   silk.position.set(0, 0, Z1);

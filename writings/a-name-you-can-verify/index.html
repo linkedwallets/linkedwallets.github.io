@@ -18,7 +18,7 @@
 
   <header class="site-head wrap">
     <a class="brand" href="/" aria-label="linkedwallets — home"><i class="sh bu"></i>linkedwallets</a>
-    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>block #<span data-block>—</span></span>
+    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>slot #<span data-slot>—</span></span>
     <nav class="site-nav" aria-label="Site">
       <a href="/writings/" aria-current="page">Writings</a>
       <a href="/projects/">Projects</a>
@@ -32,7 +32,7 @@
       <div class="pal-top"><span>explorer · indexes one person</span><button class="pal-x" type="button">esc ✕</button></div>
       <input type="text" placeholder="search tx / address / page…" aria-label="Search this site" autocomplete="off" spellcheck="false">
       <ul class="pal-list"></ul>
-      <div class="pal-foot"><span>block #<span data-block>—</span></span><span>↑↓ move · ↵ open</span></div>
+      <div class="pal-foot"><span>slot #<span data-slot>—</span></span><span>↑↓ move · ↵ open</span></div>
     </div>
   </div>
 
@@ -40,20 +40,20 @@
     <div>
       <header class="writing-head">
         <svg class="mininode" viewBox="0 0 150 80" role="img" aria-label="part 02 of 5: storage"><path class="b" d="M4 22h22v52h-22zM4 22l8.4 -6h22l-8.4 6zM26 22l8.4 -6v52l-8.4 6z"/><path class="on" d="M40 62h32v6h-32zM40 62l2.8 -2h32l-2.8 2zM72 62l2.8 -2v6l-2.8 2z"/><path class="b" d="M48 34h15v15h-15zM48 34l2.1 -1.5h15l-2.1 1.5zM63 34l2.1 -1.5v15l-2.1 1.5z"/><path class="b" d="M84 44h30v20h-30zM84 44l2.1 -1.5h30l-2.1 1.5zM114 44l2.1 -1.5v20l-2.1 1.5zM114 44v26"/><path class="b" d="M128 36h9v8h-9zM128 36l1.4 -1h9l-1.4 1zM137 36l1.4 -1v8l-1.4 1z"/></svg>
-        <p class="part"><b>02</b> / 05 · storage · transfers · tx 0x7c1d…94af</p>
+        <p class="part"><b>02</b> / 05 · storage · transfers · tx 3cR8…Zrn2</p>
         <a class="backlink" href="/writings/">← all writings</a>
         <h1>A name you can verify</h1>
       </header>
 
       <section class="essay">
         <div class="card receipt" aria-label="Transaction receipt">
-          <div class="receipt-row"><span class="k">tx hash</span><span class="v">0x7c1d4b8e91c2f0aa675d3e8b4c2f01…94af</span></div>
-          <div class="receipt-row"><span class="k">block</span><span class="v">21,558,192 · Oct 17, 2026 09:41:12 UTC</span></div>
+          <div class="receipt-row"><span class="k">signature</span><span class="v">3cR8vXjpGD6hnDw632DKv93Vg6cR8a…Zrn2</span></div>
+          <div class="receipt-row"><span class="k">slot</span><span class="v">443,543,180 · Oct 17, 2026 09:41:12 UTC</span></div>
           <div class="receipt-row"><span class="k">from</span><span class="v who">linkedwallets</span></div>
           <div class="receipt-row"><span class="k">to</span><span class="v">you, the reader</span></div>
           <div class="receipt-row"><span class="k">value</span><span class="v">0.000 — the words are free</span></div>
-          <div class="receipt-row"><span class="k">gas used</span><span class="v">21,000 (a standard transfer)</span></div>
-          <div class="receipt-row"><span class="k">status</span><span class="v ok">● confirmed · <span data-conf-base="21558192">—</span> confirmations</span></div>
+          <div class="receipt-row"><span class="k">fee</span><span class="v">5,000 lamports (one signature)</span></div>
+          <div class="receipt-row"><span class="k">status</span><span class="v ok">● finalized · <span data-conf-base="443543180">—</span> slots ago</span></div>
         </div>
 
         <article class="prose">
@@ -65,7 +65,7 @@
           <blockquote>A pseudonym is a name with skin in the game: it can only borrow against its own history.</blockquote>
 
           <h2>The gradient of disclosure</h2>
-          <p>None of this means pseudonyms owe the world opacity. You can be pseudonymous and warm, pseudonymous and public, pseudonymous and tedious about your coffee. The mask hides your face, not your voice. Over enough blocks, a pseudonym accumulates a personality the way an address accumulates history — every transfer a small confession.</p>
+          <p>None of this means pseudonyms owe the world opacity. You can be pseudonymous and warm, pseudonymous and public, pseudonymous and tedious about your coffee. The mask hides your face, not your voice. Over enough slots, a pseudonym accumulates a personality the way an address accumulates history — every transfer a small confession.</p>
           <p>The failure mode is not anonymity itself. It is letting the pseudonym make promises your key cannot cover. Sign fewer things, mean them more, and the name becomes worth more than the face ever was.</p>
 
           <h2>Verify, then trust</h2>
@@ -85,7 +85,7 @@
       <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
       <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
     </nav>
-    <span class="chainline"><span><i class="sh ci throb"></i>mainnet · synced · block #<span data-block>—</span></span><span>12.1s block time · gas 0.31 gwei</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
+    <span class="chainline"><span><i class="sh ci throb"></i>mainnet-beta · caught up · slot #<span data-slot>—</span></span><span>400ms slot time · fee 5,000 lamports</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
   </footer>
 
   <script src="/assets/main.js"></script>
