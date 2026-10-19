@@ -5,47 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Projects — linkedwallets</title>
   <meta name="description" content="Small tools and contracts by linkedwallets: a sparse Merkle library, a fee forecast as weather, a dust sweeper, a hexword generator.">
-  <meta name="theme-color" content="#e9e6dd">
+  <meta name="theme-color" content="#f4f3ee">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=panchang@600,700,800&amp;display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=supreme@400,500&amp;display=swap">
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=gambetta@400,500,600,401&amp;display=swap">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
   <a class="skip" href="#main">skip to content</a>
 
-  <header class="site-head">
-    <div class="chain-strip" aria-hidden="true">
-      <div class="wrap">
-        <span class="lit">mainnet</span>
-        <span class="opt">12.1s block time</span>
-        <span class="opt">gas 0.31 gwei</span>
-        <span class="end">block #<span data-block>—</span></span>
-        <span><span class="dot throb"></span>synced</span>
-      </div>
-    </div>
-    <div class="wrap head-grid">
-      <a class="brand" href="/" aria-label="linkedwallets — home">
-        <svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-          <path d="M32 32 L14 16 M32 32 L50 16 M32 32 L32 50" stroke="#121211" stroke-width="4"/>
-          <circle cx="14" cy="16" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
-          <circle cx="50" cy="16" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
-          <circle cx="32" cy="50" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
-          <circle cx="32" cy="32" r="8" fill="#2a43dc" stroke="#121211" stroke-width="3"/>
-        </svg>
-        linkedwallets
-      </a>
-      <nav class="site-nav" aria-label="Site">
-        <a href="/writings/">Writings</a>
-        <a href="/projects/" aria-current="page">Projects</a>
-        <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
-      </nav>
-      <button class="k-btn" type="button" data-explorer aria-haspopup="dialog" aria-controls="explorer">
-        <span class="long">search tx / address…</span><span class="short">menu</span><kbd>⌘K</kbd>
-      </button>
-    </div>
+  <header class="site-head wrap">
+    <a class="brand" href="/" aria-label="linkedwallets — home"><i class="sh bu"></i>linkedwallets</a>
+    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>block #<span data-block>—</span></span>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/writings/">Writings</a>
+      <a href="/projects/" aria-current="page">Projects</a>
+      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
+      <button class="k-btn" type="button" data-explorer aria-haspopup="dialog" aria-controls="explorer"><span class="long">Search</span><span class="short">Menu</span><kbd>⌘K</kbd></button>
+    </nav>
   </header>
 
   <div class="palette" id="explorer" role="dialog" aria-modal="true" aria-label="Explorer" hidden>
@@ -57,19 +36,18 @@
     </div>
   </div>
 
-  <main id="main">
-    <div class="wrap">
-      <header class="page-head">
-        <p class="eyebrow">contracts · 4 deployed-ish</p>
+  <main id="main" class="page wrap">
+    <header class="page-head">
+      <div>
+        <p class="label"><i class="sh"></i>contracts · 4 deployed-ish</p>
         <h1>Projects</h1>
-        <p class="lede">Small things that live on the network, or beside it. Each one has an address, a status, and no roadmap.</p>
-      </header>
-
-      <section class="list-band" aria-label="All projects">
-        <div class="contract-grid">
-        <article class="contract" id="sparse-forest">
+      </div>
+      <p class="lede">Small things that live on the network, or beside it. Each one has an address, a status, and no roadmap.</p>
+    </header>
+    <section class="contract-grid" aria-label="All projects">
+        <article class="card contract" id="sparse-forest">
           <div class="contract-head">
-            <h2>sparse-forest</h2>
+            <i class="sh"></i><h2>sparse-forest</h2>
             <span class="badge deployed">deployed</span>
           </div>
           <code class="addr">0x5f0e7a1c…9c02</code>
@@ -79,9 +57,9 @@
           </ul>
         </article>
 
-        <article class="contract" id="mempool-weather">
+        <article class="card contract" id="mempool-weather">
           <div class="contract-head">
-            <h2>mempool.weather</h2>
+            <i class="sh"></i><h2>mempool.weather</h2>
             <span class="badge building">building</span>
           </div>
           <code class="addr">0xBa5e11d0…d10c</code>
@@ -91,9 +69,9 @@
           </ul>
         </article>
 
-        <article class="contract" id="dust">
+        <article class="card contract" id="dust">
           <div class="contract-head">
-            <h2>dust</h2>
+            <i class="sh"></i><h2>dust</h2>
             <span class="badge deployed">deployed</span>
           </div>
           <code class="addr">0x400dc0de…c0de</code>
@@ -103,9 +81,9 @@
           </ul>
         </article>
 
-        <article class="contract" id="hexwords">
+        <article class="card contract" id="hexwords">
           <div class="contract-head">
-            <h2>hexwords</h2>
+            <i class="sh"></i><h2>hexwords</h2>
             <span class="badge experiment">experiment</span>
           </div>
           <code class="addr">0xfa7cade…bee4</code>
@@ -114,38 +92,19 @@
             <li>rust</li><li>vanity</li><li>words</li>
           </ul>
         </article>
-        </div>
-      </section>
-    </div>
+        </section>
   </main>
 
-  <footer class="site-foot">
-    <div class="wrap">
-      <div class="foot-top">
-        <p class="foot-who">linkedwallets — pseudonymous by design, signed by default.</p>
-        <div class="foot-col">
-          <h3>index</h3>
-          <a href="/">Home</a>
-          <a href="/writings/">Writings</a>
-          <a href="/projects/">Projects</a>
-        </div>
-        <div class="foot-col">
-          <h3>elsewhere</h3>
-          <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
-          <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
-        </div>
-      </div>
-      <div class="foot-block" aria-hidden="true">
-        <span class="lbl">current block</span>
-        <span class="num" data-block>—</span>
-      </div>
-      <div class="foot-strip">
-        <span><span class="dot throb"></span>synced</span>
-        <span>no cookies · no analytics</span>
-        <span>hand-rolled html</span>
-        <span>⌘K to search</span>
-      </div>
-    </div>
+  <footer class="site-foot wrap">
+    <p class="foot-who">linkedwallets — pseudonymous by design, signed by default.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/writings/">Writings</a>
+      <a href="/projects/">Projects</a>
+      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
+      <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
+    </nav>
+    <span class="chainline"><span><i class="sh ci throb"></i>mainnet · synced · block #<span data-block>—</span></span><span>12.1s block time · gas 0.31 gwei</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
   </footer>
 
   <script src="/assets/main.js"></script>

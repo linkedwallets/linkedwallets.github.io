@@ -5,47 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Writings — linkedwallets</title>
   <meta name="description" content="Essays by linkedwallets, filed as transfers: on pseudonyms, block space, and starting over.">
-  <meta name="theme-color" content="#e9e6dd">
+  <meta name="theme-color" content="#f4f3ee">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
-  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=panchang@600,700,800&amp;display=swap">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=supreme@400,500&amp;display=swap">
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=gambetta@400,500,600,401&amp;display=swap">
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
   <a class="skip" href="#main">skip to content</a>
 
-  <header class="site-head">
-    <div class="chain-strip" aria-hidden="true">
-      <div class="wrap">
-        <span class="lit">mainnet</span>
-        <span class="opt">12.1s block time</span>
-        <span class="opt">gas 0.31 gwei</span>
-        <span class="end">block #<span data-block>—</span></span>
-        <span><span class="dot throb"></span>synced</span>
-      </div>
-    </div>
-    <div class="wrap head-grid">
-      <a class="brand" href="/" aria-label="linkedwallets — home">
-        <svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-          <path d="M32 32 L14 16 M32 32 L50 16 M32 32 L32 50" stroke="#121211" stroke-width="4"/>
-          <circle cx="14" cy="16" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
-          <circle cx="50" cy="16" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
-          <circle cx="32" cy="50" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
-          <circle cx="32" cy="32" r="8" fill="#2a43dc" stroke="#121211" stroke-width="3"/>
-        </svg>
-        linkedwallets
-      </a>
-      <nav class="site-nav" aria-label="Site">
-        <a href="/writings/" aria-current="page">Writings</a>
-        <a href="/projects/">Projects</a>
-        <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
-      </nav>
-      <button class="k-btn" type="button" data-explorer aria-haspopup="dialog" aria-controls="explorer">
-        <span class="long">search tx / address…</span><span class="short">menu</span><kbd>⌘K</kbd>
-      </button>
-    </div>
+  <header class="site-head wrap">
+    <a class="brand" href="/" aria-label="linkedwallets — home"><i class="sh bu"></i>linkedwallets</a>
+    <span class="chain" aria-hidden="true"><i class="sh ci throb"></i>block #<span data-block>—</span></span>
+    <nav class="site-nav" aria-label="Site">
+      <a href="/writings/" aria-current="page">Writings</a>
+      <a href="/projects/">Projects</a>
+      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
+      <button class="k-btn" type="button" data-explorer aria-haspopup="dialog" aria-controls="explorer"><span class="long">Search</span><span class="short">Menu</span><kbd>⌘K</kbd></button>
+    </nav>
   </header>
 
   <div class="palette" id="explorer" role="dialog" aria-modal="true" aria-label="Explorer" hidden>
@@ -57,72 +36,43 @@
     </div>
   </div>
 
-  <main id="main">
-    <div class="wrap">
-      <header class="page-head">
-        <p class="eyebrow">transaction history · 3 transfers</p>
+  <main id="main" class="page wrap">
+    <header class="page-head">
+      <div>
+        <p class="label"><i class="sh tr"></i>transaction history · 3 transfers</p>
         <h1>Writings</h1>
-        <p class="lede">Essays filed as transfers. Each one is a block of text, permanently in the log, timestamped and signed.</p>
-      </header>
-
-      <section class="list-band" aria-label="All writings">
-        <div class="tx-list">
+      </div>
+      <p class="lede">Essays filed as transfers. Each one is a block of text, permanently in the log, timestamped and signed.</p>
+    </header>
+    <section class="card list-card" aria-label="All writings">
           <a class="tx-row" href="/writings/a-name-you-can-verify/">
-            <span class="tx-hash">tx 0x7c1d…94af</span>
-            <span>
-              <span class="tx-title">A name you can verify</span>
-              <span class="tx-dek">Pseudonyms get called fake names. A name you can sign with is the most durable name there is.</span>
-            </span>
-            <span class="tx-meta"><span class="lit">block 21,558,192</span><br>Oct 17, 2026 · 7 min</span>
+            <i class="sh tr"></i><span class="tx-title">A name you can verify</span><span class="tx-meta">Oct 17, 2026 · 7 min</span>
+            <span class="tx-dek">Pseudonyms get called fake names. A name you can sign with is the most durable name there is.</span>
+            <span class="tx-hash">tx 0x7c1d…94af · block 21,558,192</span>
           </a>
           <a class="tx-row" href="/writings/notes-on-block-space/">
-            <span class="tx-hash">tx 0x3b90…2c61</span>
-            <span>
-              <span class="tx-title">Notes on block space</span>
-              <span class="tx-dek">Every byte competes with every other byte. What a scarce page teaches you about writing.</span>
-            </span>
-            <span class="tx-meta"><span class="lit">block 21,470,231</span><br>Oct 8, 2026 · 5 min</span>
+            <i class="sh tr"></i><span class="tx-title">Notes on block space</span><span class="tx-meta">Oct 8, 2026 · 5 min</span>
+            <span class="tx-dek">Every byte competes with every other byte. What a scarce page teaches you about writing.</span>
+            <span class="tx-hash">tx 0x3b90…2c61 · block 21,470,231</span>
           </a>
           <a class="tx-row" href="/writings/change-addresses/">
-            <span class="tx-hash">tx 0x9e44…f7a1</span>
-            <span>
-              <span class="tx-title">Change addresses</span>
-              <span class="tx-dek">When a wallet spends, what is left over lands somewhere new. Notes on starting pockets over.</span>
-            </span>
-            <span class="tx-meta"><span class="lit">block 21,382,650</span><br>Sep 29, 2026 · 6 min</span>
+            <i class="sh tr"></i><span class="tx-title">Change addresses</span><span class="tx-meta">Sep 29, 2026 · 6 min</span>
+            <span class="tx-dek">When a wallet spends, what is left over lands somewhere new. Notes on starting pockets over.</span>
+            <span class="tx-hash">tx 0x9e44…f7a1 · block 21,382,650</span>
           </a>
-        </div>
-      </section>
-    </div>
+    </section>
   </main>
 
-  <footer class="site-foot">
-    <div class="wrap">
-      <div class="foot-top">
-        <p class="foot-who">linkedwallets — pseudonymous by design, signed by default.</p>
-        <div class="foot-col">
-          <h3>index</h3>
-          <a href="/">Home</a>
-          <a href="/writings/">Writings</a>
-          <a href="/projects/">Projects</a>
-        </div>
-        <div class="foot-col">
-          <h3>elsewhere</h3>
-          <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
-          <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
-        </div>
-      </div>
-      <div class="foot-block" aria-hidden="true">
-        <span class="lbl">current block</span>
-        <span class="num" data-block>—</span>
-      </div>
-      <div class="foot-strip">
-        <span><span class="dot throb"></span>synced</span>
-        <span>no cookies · no analytics</span>
-        <span>hand-rolled html</span>
-        <span>⌘K to search</span>
-      </div>
-    </div>
+  <footer class="site-foot wrap">
+    <p class="foot-who">linkedwallets — pseudonymous by design, signed by default.</p>
+    <nav aria-label="Footer">
+      <a href="/">Home</a>
+      <a href="/writings/">Writings</a>
+      <a href="/projects/">Projects</a>
+      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
+      <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
+    </nav>
+    <span class="chainline"><span><i class="sh ci throb"></i>mainnet · synced · block #<span data-block>—</span></span><span>12.1s block time · gas 0.31 gwei</span><span>no cookies · no analytics</span><span>hand-rolled html</span></span>
   </footer>
 
   <script src="/assets/main.js"></script>

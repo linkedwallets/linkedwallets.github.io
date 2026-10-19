@@ -16,11 +16,12 @@ via GitHub Pages. The block numbers tick with a little script and a fake
 
 ## Colophon
 
-Panchang (display) and Gambetta (reading) from Fontshare, loaded from
-Fontshare's CDN as the ITF Free Font License requires for a public repo.
-Commit Mono (SIL OFL, via Uncut) for the chain chrome, self-hosted in
-`assets/fonts/` with its licence.
-Theme: a bone-white ledger with hard black rules, a halftone dot field, cobalt
-ink and a lime marker, a ⌘K explorer, and the live block number as the footer.
-Inspired by omarchy.us, yuga.com's halftone, ghost.ai, brutalistwebsites.com,
-footer.design and 404s.design. Hand-rolled CSS, no framework.
+Design after [andrewtrousdale.com](https://andrewtrousdale.com), found on
+[hoverstat.es](https://www.hoverstat.es): the person drawn as a graph of typed
+nodes, with a white index card of dotted-rule rows beside it. Warm off-white,
+black hairlines, one orange centre node. Essay pages borrow the serif long read
+of [kedzich.com](https://kedzich.com) (via httpster.net).
+Supreme (sans) and Gambetta (serif) from Fontshare, loaded from Fontshare's CDN
+as the ITF Free Font License requires for a public repo. Commit Mono (SIL OFL,
+via Uncut) for hashes, self-hosted in `assets/fonts/` with its licence.
+Hand-rolled CSS, no framework.

@@ -174,8 +174,8 @@
   }
 
   // 404: show which path reverted.
-  var slot = document.querySelector("[data-path]");
-  if (slot) {
-    slot.textContent = window.location.pathname || "/";
+  var slots = document.querySelectorAll("[data-path]");
+  for (var sp = 0; sp < slots.length; sp++) {
+    slots[sp].textContent = window.location.pathname || "/";
   }
 })();
