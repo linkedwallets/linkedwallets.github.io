@@ -1,9 +1,12 @@
-// The node on the home page. Scroll takes it apart in two moves (the side panels slide out, then
+// The node on the home page. The page opens on a flat map of the network (assets/map/map.js),
+// and the camera starts far above the site's node on it. Scroll first zooms in until the map
+// point is the closed node, then takes it apart in two moves (the side panels slide out, then
 // every part floats out), then the camera visits five parts in turn: that part stays a render,
 // the rest of the machine turns into a blueprint, and the part's callout opens beside it.
 // Nothing catches the wheel: the stage is a sticky box, and scrollY picks the frame.
 
 import { THREE, stage, outline, setLook, fontsReady, floorShadow } from "./kit.js";
+import { map } from "../map/map.js";
 import { buildSidePanel, buildChassis, buildBezel } from "./case.js";
 import { buildBoard, buildRam, buildCooler } from "./board.js";
 import { buildCpu, buildSsd, buildKey } from "./chips.js";
@@ -44,17 +47,25 @@ const FOCUS = [
   ["key", "key", 0.26],
 ];
 
+// Over the map the camera is DEEP times farther from the node than at the closed view, so the
+// node starts as a speck under its orange mark. ZOOM: the screens of scroll the zoom takes.
+const DEEP = 64;
+const ZOOM = 1.2;
+
 // The timeline, in screens of scroll: each stop holds still for `hold`, then moves to the next.
 function timeline() {
   const t = [
-    { at: 0, hold: 0.12, e: 0, cam: "closed" },
-    { at: 0.6, hold: 0.08, e: 1, cam: "open" },
-    { at: 1.45, hold: 0.3, e: 2, cam: "apart" },
+    { at: 0, hold: 0.08, e: 0, cam: "map" },
+    { at: ZOOM, hold: 0.12, e: 0, cam: "closed" },
+    { at: ZOOM + 0.6, hold: 0.08, e: 1, cam: "open" },
+    { at: ZOOM + 1.45, hold: 0.3, e: 2, cam: "apart" },
   ];
-  FOCUS.forEach((f, i) => t.push({ at: 2.2 + i * 0.75, hold: 0.32, e: 2, cam: f[0], focus: i }));
+  FOCUS.forEach((f, i) => t.push({ at: ZOOM + 2.2 + i * 0.75, hold: 0.32, e: 2, cam: f[0], focus: i }));
   return t;
 }
 const STOPS = timeline();
+const APART = STOPS.find((s) => s.cam === "apart");
+const VISITS = STOPS.filter((s) => s.focus !== undefined);
 const END = STOPS[STOPS.length - 1].at + STOPS[STOPS.length - 1].hold + 0.1;
 // The stage stays pinned while the page scrolls through END screens.
 
@@ -130,6 +141,8 @@ async function start() {
   let H = 1;
   let tall = false;
   let views = {};
+  let closedPx = 1; // the closed node's height on screen, in pixels
+  let mapShown = true;
   let shown = "";
   let p = 0;
   let goal = 0;
@@ -148,6 +161,7 @@ async function start() {
   }
 
   function layout() {
+    map.layout();
     W = canvas.clientWidth;
     H = canvas.clientHeight;
     tall = W / H < 0.8;
@@ -182,6 +196,12 @@ async function start() {
       open: { at: new THREE.Vector3(0, 0, 0), d: fit(caseR * (tall ? 1.15 : 1.5), 0.9), az: 33, el: 14, sx: 0, sy: 0 },
       apart: { at: sCentre, d: apartD, az: 30, el: 12, sx: 0, sy: 0 },
     };
+    // Over the map: the same direction as the closed view, DEEP times farther, with the lens
+    // shifted so the node sits on its point of the map.
+    const c = views.closed;
+    const m = map.home;
+    views.map = { at: c.at.clone(), d: c.d * DEEP, az: c.az, el: c.el, sx: (m.x / W) * 2 - 1, sy: 1 - (m.y / H) * 2 };
+    closedPx = (0.8 * caseR * H) / (c.d * t);
     FOCUS.forEach(([id, , share]) => {
       const q = byId[id];
       views[id] = {
@@ -210,9 +230,12 @@ async function start() {
     camera.far = d + 160;
     camera.updateProjectionMatrix();
     // A lens shift moves the picture without turning the camera.
-    camera.projectionMatrix.elements[8] = -lerp(a.sx, b.sx, t);
-    camera.projectionMatrix.elements[9] = -lerp(a.sy, b.sy, t);
+    const sx = lerp(a.sx, b.sx, t);
+    const sy = lerp(a.sy, b.sy, t);
+    camera.projectionMatrix.elements[8] = -sx;
+    camera.projectionMatrix.elements[9] = -sy;
     camera.projectionMatrixInverse.copy(camera.projectionMatrix).invert();
+    return { d, sx, sy };
   }
 
   // The look of each part at one stop: 1 = render, 0 = blueprint.
@@ -256,7 +279,7 @@ async function start() {
 
     const e = lerp(A.e, B.e, t);
     parts.forEach((q, n) => partState(q, n, e));
-    view(views[A.cam], views[B.cam], t);
+    const cam = view(views[A.cam], views[B.cam], t);
 
     const la = looks(A);
     const lb = looks(B);
@@ -274,7 +297,22 @@ async function start() {
     intro.style.opacity = (1 - introOut).toFixed(3);
     intro.style.visibility = introOut >= 1 ? "hidden" : "visible";
     cue.style.opacity = (1 - clamp(pos / 0.2)).toFixed(3);
-    const tags = clamp((pos - 1.75) / 0.3);
+
+    // The zoom: the map grows as the camera closes in, with the node on its point of the map.
+    // The orange mark hands over to the node while the node is about the mark's size.
+    if (A.cam === "map") {
+      const s = views.map.d / cam.d;
+      const size = (closedPx * s) / DEEP;
+      map.frame(((cam.sx + 1) / 2) * W, ((1 - cam.sy) / 2) * H, s, 1 - introOut, 1 - clamp((size - 14) / 14));
+      canvas.style.opacity = clamp((size - 10) / 12).toFixed(3);
+      mapShown = true;
+    } else if (mapShown) {
+      map.frame(W / 2, H / 2, DEEP, 0, 0);
+      canvas.style.opacity = "";
+      mapShown = false;
+    }
+
+    const tags = clamp((pos - ZOOM - 1.75) / 0.3);
     const active = A.focus !== undefined && t < 0.5 ? A.focus : B.focus !== undefined && t >= 0.5 ? B.focus : -1;
     FOCUS.forEach(([id, name], n) => {
       const q = byId[id];
@@ -297,7 +335,7 @@ async function start() {
       c.style.opacity = (n === active ? 1 : tags * (active >= 0 ? 0.9 : 0.75)).toFixed(3);
       c.classList.toggle("on", n === active);
     });
-    const now = (active >= 0 ? "0" + (active + 1) : "00") + " / 05 · " + (active >= 0 ? FOCUS[active][1] : e < 0.5 ? "closed" : e < 1.5 ? "open" : "apart");
+    const now = (active >= 0 ? "0" + (active + 1) : "00") + " / 05 · " + (active >= 0 ? FOCUS[active][1] : pos < ZOOM / 2 ? "map" : e < 0.5 ? "closed" : e < 1.5 ? "open" : "apart");
     if (now !== shown) {
       shown = now;
       meter.textContent = now;
@@ -339,8 +377,12 @@ async function start() {
     root.classList.add("ready");
     layout();
     if (flat) {
-      // Reduced motion: one drawing of the node fully apart, every part a render, all callouts open.
-      draw(STOPS[2].at);
+      // Reduced motion: the still map (map.js draws it in its own box), then one drawing of the
+      // node fully apart, every part a render, all callouts open.
+      draw(APART.at);
+      map.frame();
+      canvas.style.opacity = "";
+      mapShown = true;
       intro.style.opacity = "";
       intro.style.visibility = "";
       calls.forEach((c) => {
@@ -369,7 +411,7 @@ async function start() {
     a.addEventListener("click", (ev) => {
       if (still.matches) return;
       ev.preventDefault();
-      const stop = STOPS[3 + n];
+      const stop = VISITS[n];
       const room = root.offsetHeight - stageBox.offsetHeight;
       const top = root.getBoundingClientRect().top + window.scrollY;
       window.scrollTo({ top: top + ((stop.at + stop.hold / 2) / END) * room, behavior: "smooth" });

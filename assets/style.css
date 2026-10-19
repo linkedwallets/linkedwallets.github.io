@@ -1,5 +1,5 @@
-/* linkedwallets.github.io — one person as a node: a small server, rendered live, taken apart by
-   scroll, after ghost.ai. Warm grey paper with grain, black hairline tables, one orange.
+/* linkedwallets.github.io — one person as a node: a flat map of the network, a zoom into the
+   site's node, then a small server, rendered live, taken apart by scroll, after ghost.ai. Warm grey paper with grain, black hairline tables, one orange.
    Switzer + Gambetta load from Fontshare's CDN (the ITF licence forbids hosting the files here).
    Commit Mono (OFL) is self-hosted. Typed graph nodes from the pass after andrewtrousdale.com. */
 
@@ -177,17 +177,18 @@ a:hover { color: var(--orange); }
 
 .more { display: inline-block; margin: 0.4rem 0 1rem; font-size: 0.8rem; font-weight: 500; }
 
-/* ---------- home: the node ----------
-   A sticky stage holds a WebGL canvas. scene.js maps scroll to the stops: closed, panels out,
-   all parts out, then one stop per part. Tags and callouts are HTML over the canvas. */
+/* ---------- home: the map, then the node ----------
+   A sticky stage holds the map (a canvas of dots under the graph's SVG) and a WebGL canvas.
+   scene.js maps scroll to the stops: the map, the zoom into the closed node, panels out, all
+   parts out, then one stop per part. Tags and callouts are HTML over the canvas. */
 
 .nv { position: relative; }
 .nv-stage { position: relative; overflow: hidden; display: flex; flex-direction: column; }
 .nv-gl { display: none; }
 
-html.js .nv:not(.still) { height: 662vh; height: 662svh; }
+html.js .nv:not(.still) { height: 782vh; height: 782svh; }
 html.js .nv:not(.still) .nv-stage { position: sticky; top: 0; height: 100vh; height: 100svh; }
-html.js .nv:not(.still) .nv-gl { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
+html.js .nv:not(.still) .nv-gl { display: block; position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 
 .nv-intro {
   order: -1;
@@ -196,7 +197,7 @@ html.js .nv:not(.still) .nv-gl { display: block; position: absolute; inset: 0; w
   max-width: 26rem;
   padding: 5.5rem var(--pad) 1rem;
 }
-html.js .nv:not(.still) .nv-intro { position: absolute; left: 0; bottom: 7vh; padding: 0 var(--pad); }
+html.js .nv:not(.still) .nv-intro { position: absolute; left: 0; top: 50%; transform: translateY(-50%); padding: 0 var(--pad); }
 .nv-intro h1 {
   margin: 0;
   font-size: clamp(2.3rem, 4.2vw, 3.6rem);
@@ -236,6 +237,27 @@ html.js .nv:not(.still) .nv-meter {
   font-size: 0.7rem;
   color: var(--mute);
 }
+
+/* the map: a flat world in dots, the network's nodes, and the transfer graph (map.js) */
+.nv-map { display: none; position: relative; margin: 0; }
+html.js .nv-map { display: block; }
+html.js .nv:not(.still) .nv-map { position: absolute; inset: 0; }
+.nv.still .nv-map { aspect-ratio: 360 / 150; }
+.nv-dots, .nv-map .graph { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nv-map .graph text { opacity: var(--words, 1); }
+.nv-map figcaption {
+  position: absolute;
+  left: var(--pad);
+  bottom: 2.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--mute);
+}
+.nv.still .nv-map figcaption { bottom: 0.4rem; }
 
 /* callouts: an orange tag joined to a small table of rows */
 .nv-calls {
@@ -342,17 +364,6 @@ html.js .nv:not(.still) .call:not(.on) .pill:hover { color: var(--ink); border-c
 .title-block div:first-child { border-left: 0; }
 .title-block dt { padding: 0.35rem 0.6rem; color: var(--faint); border-right: 1px solid var(--rule); }
 .title-block dd { margin: 0; padding: 0.35rem 0.6rem; }
-
-.map { margin: 0.4rem 0 0; }
-.map figcaption {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.2rem;
-  margin-top: 0.4rem;
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: var(--mute);
-}
 
 /* ---------- transfer graph ---------- */
 
@@ -669,7 +680,9 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
 
 @media (max-width: 760px) {
   .parts { grid-template-columns: minmax(0, 1fr); }
-  html.js .nv:not(.still) .nv-intro { top: 4.2rem; bottom: auto; }
+  html.js .nv:not(.still) .nv-intro { top: 4.2rem; transform: none; }
+  html.js .nv:not(.still) .nv-map figcaption { bottom: 5.6rem; }
+  .nv.still .nv-map { aspect-ratio: 230 / 170; }
   html.js .nv:not(.still) .nv-cue { bottom: 3.6rem; }
   html.js .nv:not(.still) .nv-meter { bottom: 1.4rem; }
   .nv-intro h1 { font-size: 2.3rem; }
@@ -689,13 +702,12 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
   .chain, .site-nav > a { display: none; }
   .k-btn kbd, .k-btn .long { display: none; }
   .k-btn .short { display: inline; }
-  .map figcaption .opt { display: none; }
-  .part-sec .g-node text, .part-sec .g-amount { font-size: 27px; stroke-width: 9px; }
-  .part-sec .g-node text.n { font-size: 15px; }
-  .part-sec .g-center text { font-size: 29px; }
-  .part-sec .g-center text.sub { font-size: 20px; }
-  .g-node .s, .g-edge { stroke-width: 2; }
-  .g-pulse { stroke-width: 5; }
+  .nv-map figcaption .opt { display: none; }
+  .nv-map .g-node text, .nv-map .g-amount { font-size: 11px; stroke-width: 4px; }
+  .nv-map .g-node text.n { font-size: 8px; }
+  .nv-map .g-center text { font-size: 12px; }
+  .nv-map .g-center text.sub { font-size: 9px; }
+  .revert .g-node .s, .revert .g-edge { stroke-width: 2; }
   .card { padding-inline: 1.1rem; }
   .contract-grid { grid-template-columns: minmax(0, 1fr); }
   .prose { font-size: 1.12rem; }

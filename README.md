@@ -9,15 +9,30 @@ via GitHub Pages. The slot numbers tick with a little script and a fake
 
 ## Layout
 
-- `/` — home: the node, taken apart by scroll, then the transfer graph and the parts in full
+- `/` — home: a map of the network with the transfer graph on it, a zoom into the node, the
+  node taken apart by scroll, then the parts in full
 - `/writings/` — essays, filed as transfers
 - `/projects/` — small tools, filed as programs
 - `/404.html` — a failed-transaction screen
+- `assets/map/` — the map: a land mask, and the script that draws the dots and the graph
 - `assets/node/` — the node: one module per group of parts, a shared kit, and the scroll scene
 
 ## Colophon
 
-The home page shows one object: the node, a small server in a brushed-aluminium
+The home page opens on a flat map of the network. The land is fine blue-violet
+dots on the paper, in an equirectangular projection cut in the Pacific, so the
+ocean sits under the name. Small ink points mark where many validators run. The
+transfer graph sits on top: the site's node in orange, its nine peers, and the
+transfers as arcs (hover a wallet to light its edges). The map is one 18 KB
+PNG land mask, made once from [world-atlas](https://github.com/topojson/world-atlas)
+land-50m (Natural Earth data, public domain; world-atlas is ISC, licence in
+`assets/map/`), and a canvas draws the dots in every frame of the zoom. Scroll
+moves the camera down into the site's node: the map grows around it, finer
+dots fill in, the orange mark hands over to the closed node, and the map fades
+into the paper. The map and the node share one camera move: the map scales by
+the same factor as the camera's distance shrinks.
+
+Then the page shows one object: the node, a small server in a brushed-aluminium
 case, rendered live with [three.js](https://threejs.org) r170 from one pinned
 jsDelivr URL. Every part is built in code (no models, no images): the case,
 the mainboard, the CPU, the SSD, the network card and a key chip. Scroll opens
@@ -29,7 +44,8 @@ the CPU runs the programs, the network card links the peers, the key chip
 holds the name. The sequence follows [ghost.ai](https://ghost.ai): a pinned
 stage, a camera that zooms from part to part, a blueprint behind the part in
 focus, one orange tag. Nothing catches the wheel. With reduced motion the
-node shows once, fully apart, with every table open under it.
+map shows still, then the node once, fully apart, with every table open under
+it.
 
 The look is warm grey paper with a fine grain, black hairline tables and one
 orange. The typed nodes of the transfer graph come from an earlier pass
