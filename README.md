@@ -9,29 +9,35 @@ via GitHub Pages. The block numbers tick with a little script and a fake
 
 ## Layout
 
-- `/` — home: the person as an exploded view, with the transfer graph as part 04
+- `/` — home: the node, taken apart by scroll, then the transfer graph and the parts in full
 - `/writings/` — essays, filed as transfers
 - `/projects/` — small tools, filed as contracts
 - `/404.html` — a revert screen
+- `assets/node/` — the node: one module per group of parts, a shared kit, and the scroll scene
 
 ## Colophon
 
-The home page is an exploded view of one wallet, drawn as six layers of one
-person: shell, transfers, contracts, graph, address, key. Scroll takes the stack
-apart, then brings each layer into focus with its content. The scroll
-behaviour follows [ghost.ai](https://ghost.ai): a pinned stage, a camera that
-leans in on the focused part, the other parts dimmed to outlines, and one
-orange label pill. The plates are CSS 3D, with no images and no library.
-With reduced motion the stack shows fully exploded and does not move.
+The home page shows one object: the node, a small server in a brushed-aluminium
+case, rendered live with [three.js](https://threejs.org) r170 from one pinned
+jsDelivr URL. Every part is built in code (no models, no images): the case,
+the mainboard, the CPU, the SSD, the network card and a key chip. Scroll opens
+the side panels, then takes every part out, then the camera visits five parts
+in turn. The part in focus stays a render, the rest of the machine turns into a
+pale blue blueprint, and an orange tag opens a small table with that part's
+share of the site: the case holds the readme, the storage holds the essays,
+the CPU runs the contracts, the network card links the peers, the key chip
+holds the name. The sequence follows [ghost.ai](https://ghost.ai): a pinned
+stage, a camera that zooms from part to part, a blueprint behind the part in
+focus, one orange tag. Nothing catches the wheel. With reduced motion the
+node shows once, fully apart, with every table open under it.
 
-The look is a technical drawing on warm off-white grid paper: black hairlines,
-hatched plate edges, one orange core, a title block. The pass before was
+The look is warm grey paper with a fine grain, black hairline tables and one
+orange. The typed nodes of the transfer graph come from an earlier pass
 modelled on [andrewtrousdale.com](https://andrewtrousdale.com) (via
-[hoverstat.es](https://www.hoverstat.es)): the typed nodes of the transfer
-graph and the dotted-rule rows come from that pass. Essay pages borrow the
-serif long read of [kedzich.com](https://kedzich.com) (via httpster.net).
+[hoverstat.es](https://www.hoverstat.es)). Essay pages borrow the serif long
+read of [kedzich.com](https://kedzich.com) (via httpster.net).
 
-Supreme (sans) and Gambetta (serif) from Fontshare, loaded from Fontshare's CDN
+Switzer (sans) and Gambetta (serif) from Fontshare, loaded from Fontshare's CDN
 as the ITF Free Font License requires for a public repo. Commit Mono (SIL OFL,
-via Uncut) for hashes, self-hosted in `assets/fonts/` with its licence.
-Hand-rolled CSS, no framework.
+via Uncut) for hashes and the markings on the parts, self-hosted in
+`assets/fonts/` with its licence. Hand-rolled CSS, no framework, no build step.

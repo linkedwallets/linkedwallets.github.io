@@ -182,7 +182,7 @@ a:hover { color: var(--orange); }
    all parts out, then one stop per part. Tags and callouts are HTML over the canvas. */
 
 .nv { position: relative; }
-.nv-stage { position: relative; overflow: hidden; }
+.nv-stage { position: relative; overflow: hidden; display: flex; flex-direction: column; }
 .nv-gl { display: none; }
 
 html.js .nv:not(.still) { height: 662vh; height: 662svh; }
@@ -190,6 +190,7 @@ html.js .nv:not(.still) .nv-stage { position: sticky; top: 0; height: 100vh; hei
 html.js .nv:not(.still) .nv-gl { display: block; position: absolute; inset: 0; width: 100%; height: 100%; }
 
 .nv-intro {
+  order: -1;
   position: relative;
   z-index: 2;
   max-width: 26rem;
@@ -294,6 +295,7 @@ html.js .nv:not(.still) .call:not(.on) .pill:hover { color: var(--ink); border-c
   gap: 0 clamp(1.5rem, 4vw, 4rem);
   padding-block: 3rem 4rem;
 }
+.parts > .fig { grid-column: 1 / -1; margin: 0 0 1.4rem; font-family: var(--mono); font-size: 0.68rem; color: var(--mute); }
 .part-sec { padding: 1rem 0 1.6rem; border-top: 1px solid var(--ink); min-width: 0; }
 .part-sec.wide { grid-column: 1 / -1; }
 .part-tag { display: flex; align-items: center; gap: 0.75rem; margin: 0 0 0.4rem; font-family: var(--mono); font-size: 0.68rem; color: var(--mute); }
@@ -457,7 +459,7 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
 .card .mininode { top: 1rem; right: 1.2rem; width: 6.4rem; }
 .revert .part { padding: 0 0 0.4rem; margin-right: 7rem; }
 
-.page { padding-block: clamp(4.5rem, 8vw, 6rem) 4rem; }
+.page { padding-block: clamp(1.5rem, 5vw, 3.5rem) 4rem; }
 
 .page-head {
   display: grid;
@@ -573,7 +575,7 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
 
 /* ---------- 404 ---------- */
 
-.revert { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 26rem); gap: 2rem; align-items: center; padding-block: 5rem 4rem; }
+.revert { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(18rem, 26rem); gap: 2rem; align-items: center; padding-block: 2rem 4rem; }
 .revert .card h1 { margin: 0.4rem 0 0.8rem; font-size: clamp(2.4rem, 5vw, 3.6rem); font-weight: 500; letter-spacing: -0.035em; line-height: 1; }
 .revert-panel { font-family: var(--mono); font-size: 0.75rem; line-height: 1.7; border-block: 1px solid var(--ink); padding: 0.8rem 0; overflow-wrap: anywhere; }
 .err { color: var(--orange); }
@@ -668,6 +670,8 @@ svg.focused .g-pulse.hot { animation-duration: 2.2s; }
 @media (max-width: 760px) {
   .parts { grid-template-columns: minmax(0, 1fr); }
   html.js .nv:not(.still) .nv-intro { top: 4.2rem; bottom: auto; }
+  html.js .nv:not(.still) .nv-cue { bottom: 3.6rem; }
+  html.js .nv:not(.still) .nv-meter { bottom: 1.4rem; }
   .nv-intro h1 { font-size: 2.3rem; }
   .nv-intro .tag { margin-bottom: 0.7rem; font-size: 1.05rem; }
   .nv-intro .lead { font-size: 1.05rem; }

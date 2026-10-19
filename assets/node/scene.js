@@ -4,9 +4,9 @@
 // Nothing catches the wheel: the stage is a sticky box, and scrollY picks the frame.
 
 import { THREE, stage, outline, setLook, fontsReady, floorShadow } from "./kit.js";
-import { buildSidePanel, buildChassis, buildBezel } from "./_stub.js"; // STUB
+import { buildSidePanel, buildChassis, buildBezel } from "./case.js";
 import { buildBoard, buildRam, buildCooler } from "./_stub.js"; // STUB
-import { buildCpu, buildSsd, buildKey } from "./_stub.js"; // STUB
+import { buildCpu, buildSsd, buildKey } from "./chips.js";
 import { buildNic, buildPsu } from "./_stub.js"; // STUB
 
 const DEG = Math.PI / 180;
@@ -273,7 +273,7 @@ async function start() {
     intro.style.opacity = (1 - introOut).toFixed(3);
     intro.style.visibility = introOut >= 1 ? "hidden" : "visible";
     cue.style.opacity = (1 - clamp(pos / 0.2)).toFixed(3);
-    const tags = clamp((pos - 1.3) / 0.35);
+    const tags = clamp((pos - 1.75) / 0.3);
     const active = A.focus !== undefined && t < 0.5 ? A.focus : B.focus !== undefined && t >= 0.5 ? B.focus : -1;
     FOCUS.forEach(([id, name], n) => {
       const q = byId[id];
@@ -351,8 +351,13 @@ async function start() {
     draw(p);
   }
 
-  // Compile every shader once, before the first scroll.
-  renderer.compile(scene, camera);
+  // Draw once with both looks on, so every shader compiles and every buffer uploads before
+  // the first scroll.
+  layout();
+  view(views.apart, views.apart, 0);
+  parts.forEach((q) => setLook(q.look, 0.5));
+  renderer.render(scene, camera);
+  parts.forEach((q) => setLook(q.look, 1));
   setMode();
   window.addEventListener("scroll", () => !still.matches && wake(), { passive: true });
   window.addEventListener("resize", setMode);
