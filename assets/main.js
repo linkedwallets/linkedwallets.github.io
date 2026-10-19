@@ -174,6 +174,15 @@
     }
   }
 
+  // The node (assets/node/scene.js) marks its section ready. If it never does (no WebGL, the
+  // CDN is blocked, a script error), the section falls back to the parts as a plain list.
+  var nv = document.querySelector(".nv");
+  if (nv) {
+    setTimeout(function () {
+      if (!nv.classList.contains("ready")) nv.classList.add("still", "flat");
+    }, 8000);
+  }
+
   // 404: show which path reverted.
   var slots = document.querySelectorAll("[data-path]");
   for (var sp = 0; sp < slots.length; sp++) {

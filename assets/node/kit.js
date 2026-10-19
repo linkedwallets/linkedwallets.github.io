@@ -73,7 +73,7 @@ export function palette() {
   const T = textures();
   const std = (o) => new THREE.MeshStandardMaterial(Object.assign({ transparent: true }, o));
   return {
-    alu: new THREE.MeshPhysicalMaterial({ transparent: true, color: 0xd4d5d6, metalness: 1, roughness: 0.36, roughnessMap: T.brush, anisotropy: 0.65 }),
+    alu: new THREE.MeshPhysicalMaterial({ transparent: true, color: 0xd4d5d6, metalness: 1, roughness: 0.26, roughnessMap: T.brush, anisotropy: 0.65 }),
     aluDark: std({ color: 0x45474c, metalness: 0.85, roughness: 0.44, roughnessMap: T.brush }),
     graphite: std({ color: 0x2a2b2e, metalness: 0.6, roughness: 0.5 }),
     steel: std({ color: 0xc6c9cd, metalness: 1, roughness: 0.22 }),
@@ -101,10 +101,13 @@ export function decal(wcm, hcm, draw, pxPerCm = 64) {
     transparent: true,
     roughness: 0.6,
     metalness: 0,
+    alphaTest: 0.02,
+    depthWrite: false,
     polygonOffset: true,
     polygonOffsetFactor: -2,
     polygonOffsetUnits: -2,
   });
+  mat.userData.decal = true;
   const m = new THREE.Mesh(new THREE.PlaneGeometry(wcm, hcm), mat);
   m.userData.edges = false;
   return m;
@@ -254,7 +257,7 @@ export function setLook(look, r) {
   const solid = r > 0.004;
   look.mats.forEach((m) => {
     m.opacity = r;
-    m.depthWrite = r > 0.5;
+    if (!m.userData.decal) m.depthWrite = r > 0.5;
   });
   look.meshes.forEach((m) => {
     m.material.visible = solid;
@@ -281,7 +284,9 @@ function studio() {
   panel(5, 9, -14.9, 1, 4, 3.2); // key from the left
   panel(4, 8, 14.9, 2, -3, 1.8); // fill from the right
   panel(10, 2, 0, -2, 14.9, 1.4); // a low strip in front
-  panel(9, 9, -8, 3, 14.9, 1.9); // a big soft card front left
+  panel(2.6, 11, -9, 1.5, 14.9, 2.4); // a tall strip front left: a bright band on front faces
+  panel(16, 1.1, 6, -1.2, -14.9, 2.2); // a low strip behind right: a band along side faces
+  panel(16, 0.7, 6, 3.2, -14.9, 1.6);
   panel(6, 6, 6, 3, -14.9, 2.2); // a rim from behind
   return room;
 }

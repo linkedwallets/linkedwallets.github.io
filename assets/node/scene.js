@@ -5,9 +5,9 @@
 
 import { THREE, stage, outline, setLook, fontsReady, floorShadow } from "./kit.js";
 import { buildSidePanel, buildChassis, buildBezel } from "./case.js";
-import { buildBoard, buildRam, buildCooler } from "./_stub.js"; // STUB
+import { buildBoard, buildRam, buildCooler } from "./board.js";
 import { buildCpu, buildSsd, buildKey } from "./chips.js";
-import { buildNic, buildPsu } from "./_stub.js"; // STUB
+import { buildNic, buildPsu } from "./cards.js";
 
 const DEG = Math.PI / 180;
 // Case coordinates put the floor at Y = 0. The scene puts the middle of the closed case at 0.
@@ -20,27 +20,28 @@ const BOARD_AT = new THREE.Vector3(-7.2, 17, -6);
 // (u to the right, v up, w toward the camera), for a wide screen and for a tall one.
 // turn: how the part turns as it floats out, in degrees about X, Y, Z.
 const PARTS = [
-  { id: "panelL", build: () => buildSidePanel(-1), frame: "case", wide: [-60, 0, -8], tall: [0, 44, -20], open: [-15, 0, 0] },
-  { id: "chassis", build: buildChassis, frame: "case", wide: [-38, 0, -6], tall: [0, 0, -40] },
-  { id: "bezel", build: buildBezel, frame: "case", wide: [-21, 2, 4], tall: [0, 30, 6], turn: [0, -12, 0] },
-  { id: "psu", build: buildPsu, frame: "case", wide: [-5, -13, 6], tall: [-6, -42, 0] },
-  { id: "board", build: buildBoard, frame: "board", wide: [-3, 6, -4], tall: [0, 2, -6] },
-  { id: "ram", build: buildRam, frame: "board", wide: [8, 12, 0], tall: [8, 15, 2], turn: [0, -20, 0] },
-  { id: "cpu", build: buildCpu, frame: "board", wide: [13, -2, 10], tall: [-6, -10, 10], turn: [0, -38, 0] },
-  { id: "cooler", build: buildCooler, frame: "board", wide: [24, 6, 2], tall: [7, -22, 4] },
-  { id: "ssd", build: buildSsd, frame: "board", wide: [10, -12, 12], tall: [-8, -24, 12], turn: [0, -40, 0] },
-  { id: "nic", build: buildNic, frame: "board", wide: [24, -12, 8], tall: [6, -34, 8], turn: [-90, 30, 0] },
-  { id: "key", build: buildKey, frame: "board", wide: [36, 2, 12], tall: [-2, 16, 14], turn: [0, -40, 0] },
-  { id: "panelR", build: () => buildSidePanel(1), frame: "case", wide: [56, 0, -4], tall: [0, -60, -14], open: [15, 0, 0] },
+  { id: "panelL", build: () => buildSidePanel(-1), frame: "case", wide: [-54, 0, -6], tall: [-12, 50, -8], open: [-15, 0, 0], turn: [0, 170, 0] },
+  { id: "bezel", build: buildBezel, frame: "case", wide: [-38, 1, 2], tall: [-13, 24, 0], turn: [0, -12, 0] },
+  { id: "board", build: buildBoard, frame: "board", wide: [-21, 7, -6], tall: [-9, 1, -6] },
+  { id: "psu", build: buildPsu, frame: "case", wide: [-22, -12, 4], tall: [-8, -38, 0] },
+  { id: "ram", build: buildRam, frame: "board", wide: [-8, 8, 0], tall: [9, 4, 0], turn: [0, -20, 0] },
+  { id: "cpu", build: buildCpu, frame: "board", wide: [-6, -6, 6], tall: [-10, -14, 6], turn: [0, -38, 0] },
+  { id: "cooler", build: buildCooler, frame: "board", wide: [5, 7, 0], tall: [9, -10, 0] },
+  { id: "ssd", build: buildSsd, frame: "board", wide: [5, -10, 8], tall: [2, -21, 8], turn: [0, -40, 0] },
+  { id: "key", build: buildKey, frame: "board", wide: [17, 9, 10], tall: [-10, -25, 10], turn: [0, -40, 0] },
+  { id: "nic", build: buildNic, frame: "board", wide: [18, -7, 6], tall: [6, -31, 6], turn: [0, -35, 90] },
+  { id: "chassis", build: buildChassis, frame: "case", wide: [34, 0, -8], tall: [12, 24, -8] },
+  { id: "panelR", build: () => buildSidePanel(1), frame: "case", wide: [52, 0, -4], tall: [12, 50, -4], open: [15, 0, 0] },
 ];
 
 // The parts that the camera visits, in order, with the name used by the callouts.
+// share: how much of the screen height the part fills (the rest shows the blueprint around it).
 const FOCUS = [
-  ["bezel", "case"],
-  ["ssd", "storage"],
-  ["cpu", "cpu"],
-  ["nic", "network"],
-  ["key", "key"],
+  ["bezel", "case", 0.5],
+  ["ssd", "storage", 0.34],
+  ["cpu", "cpu", 0.3],
+  ["nic", "network", 0.4],
+  ["key", "key", 0.26],
 ];
 
 // The timeline, in screens of scroll: each stop holds still for `hold`, then moves to the next.
@@ -164,8 +165,8 @@ async function start() {
     parts.forEach((q) => {
       const a = tall ? q.tall : q.wide;
       q.apart.set(0, 0, 0).addScaledVector(right, a[0]).addScaledVector(up, a[1]).addScaledVector(f, a[2]);
-      spread.expandByPoint(q.apart.clone().addScalar(q.radius * 0.5));
-      spread.expandByPoint(q.apart.clone().subScalar(q.radius * 0.5));
+      spread.expandByPoint(q.apart.clone().addScalar(q.radius * 0.7));
+      spread.expandByPoint(q.apart.clone().subScalar(q.radius * 0.7));
     });
 
     const caseR = 21.5;
@@ -181,11 +182,11 @@ async function start() {
       open: { at: new THREE.Vector3(0, 0, 0), d: fit(caseR * (tall ? 1.15 : 1.5), 0.9), az: 33, el: 14, sx: 0, sy: 0 },
       apart: { at: sCentre, d: apartD, az: 30, el: 12, sx: 0, sy: 0 },
     };
-    FOCUS.forEach(([id]) => {
+    FOCUS.forEach(([id, , share]) => {
       const q = byId[id];
       views[id] = {
         at: q.apart.clone(),
-        d: fit(q.radius, tall ? 0.62 : 0.44),
+        d: fit(q.radius, tall ? share * 1.5 : share),
         az: 34,
         el: 16,
         sx: tall ? 0 : -0.3,
