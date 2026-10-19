@@ -263,7 +263,7 @@ kbd {
   margin: clamp(1.2rem, 3vw, 2rem) 0 0;
   font-family: var(--display);
   font-weight: 800;
-  font-size: clamp(3.3rem, 15.4vw, 14.5rem);
+  font-size: clamp(3.1rem, 14.4vw, 13.4rem);
   line-height: 0.86;
   letter-spacing: -0.035em;
   text-transform: uppercase;
