@@ -70,6 +70,12 @@ let cy = 0;
 let home = { x: 0, y: 0 };
 let view = null; // the last frame scene.js asked for, or null for the still map
 let fog = null; // the intro's box, where the dots step back behind the text
+let ink = { dots: "#5f69cf", points: "rgba(20, 20, 19, 0.55)" }; // from the page's light or dark palette
+
+function readInk() {
+  const css = getComputedStyle(document.documentElement);
+  ink = { dots: css.getPropertyValue("--dots").trim(), points: css.getPropertyValue("--points").trim() };
+}
 
 const at = {}; // each graph node: its group, longitude and latitude
 const edges = [];
@@ -166,14 +172,14 @@ function paint(px, py, s, alpha, fogged) {
   const lonB = lon0 + Math.min(360, ((W - px) / s + home.x - ox) / k);
   const latA = Math.min(TOP, MID + (cy - (-py / s + home.y)) / k);
   const latB = Math.max(BOTTOM, MID + (cy - ((H - py) / s + home.y)) / k);
-  const r = tall ? 0.5 : 0.7;
-  g.fillStyle = "#7d86d6";
+  const r = tall ? 0.72 : 1;
+  g.fillStyle = ink.dots;
   if (land && lonB > lonA && latA > latB) {
     GRIDS.forEach((step, n) => {
       const gap = (step / CELLS) * ks;
       const level = n === 0 ? 1 : ramp(gap, 4.2, 7);
       if (level <= 0) return;
-      g.globalAlpha = alpha * level * 0.62;
+      g.globalAlpha = alpha * level * 0.85;
       const c = (step - 1) / 2;
       const coarser = n > 0 ? GRIDS[n - 1] : 0;
       const i0 = Math.ceil(((lonA + 180) * CELLS - 0.5 - c) / step) * step + c;
@@ -192,8 +198,8 @@ function paint(px, py, s, alpha, fogged) {
     });
   }
   // The other nodes of the network.
-  g.globalAlpha = alpha * 0.55;
-  g.fillStyle = "#141413";
+  g.globalAlpha = alpha;
+  g.fillStyle = ink.points;
   NODES.forEach(([lon, lat]) => {
     const x = px + (bx(lon) - home.x) * s;
     const y = sy(lat);
@@ -307,6 +313,11 @@ export const map = {
 };
 
 if (fig) {
+  readInk();
+  document.addEventListener("themechange", () => {
+    readInk();
+    draw();
+  });
   new ResizeObserver(() => {
     layout();
     draw();

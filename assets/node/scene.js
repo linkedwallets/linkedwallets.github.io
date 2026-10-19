@@ -5,7 +5,7 @@
 // the rest of the machine turns into a blueprint, and the part's callout opens beside it.
 // Nothing catches the wheel: the stage is a sticky box, and scrollY picks the frame.
 
-import { THREE, stage, outline, setLook, fontsReady, floorShadow } from "./kit.js";
+import { THREE, stage, outline, setLook, fontsReady, floorShadow, applyTheme } from "./kit.js";
 import { map } from "../map/map.js";
 import { buildSidePanel, buildChassis, buildBezel } from "./case.js";
 import { buildBoard, buildRam, buildCooler } from "./board.js";
@@ -406,6 +406,10 @@ async function start() {
   setMode();
   window.addEventListener("scroll", () => !still.matches && wake(), { passive: true });
   window.addEventListener("resize", setMode);
+  document.addEventListener("themechange", () => {
+    applyTheme();
+    setMode();
+  });
   if (still.addEventListener) still.addEventListener("change", setMode);
   root.querySelectorAll(".call .pill").forEach((a, n) => {
     a.addEventListener("click", (ev) => {

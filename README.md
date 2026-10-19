@@ -19,7 +19,7 @@ via GitHub Pages. The slot numbers tick with a little script and a fake
 
 ## Colophon
 
-The home page opens on a flat map of the network. The land is fine blue-violet
+The home page opens on a flat map of the network. The land is blue-violet
 dots on the paper, in an equirectangular projection cut in the Pacific, so the
 ocean sits under the name. Small ink points mark where many validators run. The
 transfer graph sits on top: the site's node in orange, its nine peers, and the
@@ -48,7 +48,12 @@ map shows still, then the node once, fully apart, with every table open under
 it.
 
 The look is warm grey paper with a fine grain, black hairline tables and one
-orange. The typed nodes of the transfer graph come from an earlier pass
+orange. A switch in the header (next to Search) turns on a dark mode: warm
+near-black paper with the same grain, light ink, a lighter blue-violet, the
+same orange. Without a choice the site follows the system setting. A choice is
+kept in `localStorage`, and a small script in each page's head sets the mode
+before the first paint. In dark the node gets a little more light and a lighter
+blueprint, so the aluminium still reads. The typed nodes of the transfer graph come from an earlier pass
 modelled on [andrewtrousdale.com](https://andrewtrousdale.com) (via
 [hoverstat.es](https://www.hoverstat.es)). Essay pages borrow the serif long
 read of [kedzich.com](https://kedzich.com) (via httpster.net).

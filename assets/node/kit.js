@@ -20,6 +20,22 @@ export const fontsReady = (async () => {
 export const ORANGE = "#ff5a1f";
 export const BLUEPRINT = 0x7d86d6;
 
+// The page's mode. In dark the blueprint is a lighter blue-violet and the light is brighter, so
+// the aluminium still reads against the dark paper (the canvas is clear, the paper shows through).
+const isDark = () => document.documentElement.getAttribute("data-theme") === "dark";
+const themed = { lines: [], shadows: [], lamps: null };
+
+export function applyTheme() {
+  const dark = isDark();
+  themed.lines.forEach((m) => m.color.setHex(dark ? 0xa3aaf0 : BLUEPRINT));
+  themed.shadows.forEach((m) => m.color.setHex(dark ? 0x000000 : 0xffffff));
+  const l = themed.lamps;
+  if (!l) return;
+  l.renderer.toneMappingExposure = dark ? 1.16 : 1.12;
+  l.key.intensity = dark ? 1.6 : 1.4;
+  l.sky.intensity = dark ? 0.45 : 0.35;
+}
+
 // A seeded random, so the textures (and the screenshots) are the same on every load.
 export function rng(seed) {
   let s = seed >>> 0;
@@ -285,7 +301,8 @@ function merge(pieces) {
 // per material, and every edge of the part goes into one line drawing (skip a mesh with
 // userData.edges = false). Returns the part's look: its materials, meshes and lines.
 export function outline(group) {
-  const line = new THREE.LineBasicMaterial({ color: BLUEPRINT, transparent: true, opacity: 0, depthWrite: false });
+  const line = new THREE.LineBasicMaterial({ color: isDark() ? 0xa3aaf0 : BLUEPRINT, transparent: true, opacity: 0, depthWrite: false });
+  themed.lines.push(line);
   group.updateMatrixWorld(true);
   const toPart = new THREE.Matrix4().copy(group.matrixWorld).invert();
   const found = [];
@@ -398,7 +415,10 @@ export function stage(canvas) {
   const key = new THREE.DirectionalLight(0xffffff, 1.4);
   key.position.set(-30, 60, 40);
   scene.add(key);
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x8a857c, 0.35));
+  const sky = new THREE.HemisphereLight(0xffffff, 0x8a857c, 0.35);
+  scene.add(sky);
+  themed.lamps = { renderer, key, sky };
+  applyTheme();
 
   const camera = new THREE.PerspectiveCamera(22, 1, 1, 2000);
   return { renderer, scene, camera };
@@ -415,6 +435,8 @@ export function floorShadow(w, d) {
     g.fillRect(0, 0, cw, ch);
   });
   const m = new THREE.Mesh(new THREE.PlaneGeometry(w, d), new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthWrite: false }));
+  themed.shadows.push(m.material);
+  applyTheme();
   m.rotation.x = -Math.PI / 2;
   m.userData.edges = false;
   return m;

@@ -32,6 +32,47 @@
   tickChain();
   setInterval(tickChain, 400);
 
+  // Light or dark. The head of each page sets the mode before the first paint; this switch flips
+  // it and keeps the choice. Without a choice the page follows the system. The map and the node
+  // listen for "themechange" on the document.
+  var root = document.documentElement;
+  var system = window.matchMedia("(prefers-color-scheme: dark)");
+  var toggles = document.querySelectorAll("[data-theme-toggle]");
+
+  function setTheme(t) {
+    root.setAttribute("data-theme", t);
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = t === "dark" ? "#1a1917" : "#e4e2dd";
+    for (var i = 0; i < toggles.length; i++) {
+      toggles[i].setAttribute("aria-pressed", t === "dark" ? "true" : "false");
+      toggles[i].querySelector("span").textContent = t === "dark" ? "Dark" : "Light";
+    }
+    document.dispatchEvent(new CustomEvent("themechange", { detail: t }));
+  }
+
+  function savedTheme() {
+    try {
+      return localStorage.getItem("theme");
+    } catch (e) {
+      return null;
+    }
+  }
+
+  setTheme(root.getAttribute("data-theme") === "dark" ? "dark" : "light");
+  for (var tg = 0; tg < toggles.length; tg++) {
+    toggles[tg].addEventListener("click", function () {
+      var t = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      try {
+        localStorage.setItem("theme", t);
+      } catch (e) {}
+      setTheme(t);
+    });
+  }
+  system.addEventListener("change", function () {
+    var t = savedTheme();
+    if (t !== "light" && t !== "dark") setTheme(system.matches ? "dark" : "light");
+  });
+
   // The explorer: a ⌘K palette that indexes exactly one person. It is also the menu.
   var INDEX = [
     ["Home", "/", "01"],

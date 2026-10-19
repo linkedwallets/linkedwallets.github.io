@@ -6,6 +6,16 @@
   <title>Writings — linkedwallets</title>
   <meta name="description" content="Essays by linkedwallets, filed as transfers: on pseudonyms, block space, and starting over.">
   <meta name="theme-color" content="#e4e2dd">
+  <script>
+    // Light or dark before the first paint: the visitor's choice, else the system's.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", t);
+      document.querySelector('meta[name="theme-color"]').content = t === "dark" ? "#1a1917" : "#e4e2dd";
+    })();
+  </script>
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
@@ -23,6 +33,7 @@
       <a href="/writings/" aria-current="page">Writings</a>
       <a href="/projects/">Projects</a>
       <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
+      <button class="t-btn" type="button" data-theme-toggle aria-pressed="false" aria-label="Dark mode"><i></i><span>Light</span></button>
       <button class="k-btn" type="button" data-explorer aria-haspopup="dialog" aria-controls="explorer"><span class="long">Search</span><span class="short">Menu</span><kbd>⌘K</kbd></button>
     </nav>
   </header>
