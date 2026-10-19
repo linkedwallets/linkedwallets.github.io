@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>linkedwallets — an explorer for one person</title>
   <meta name="description" content="linkedwallets: a pseudonym with a key behind it. Essays and small tools, no trackers, no cookies.">
-  <meta name="theme-color" content="#0b0e12">
+  <meta name="theme-color" content="#e9e6dd">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&display=swap">
+  <link rel="preload" href="/assets/fonts/Panchang-Variable.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/Gambetta-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
@@ -21,78 +20,77 @@
         <span class="lit">mainnet</span>
         <span class="opt">12.1s block time</span>
         <span class="opt">gas 0.31 gwei</span>
+        <span class="end">block #<span data-block>—</span></span>
         <span><span class="dot throb"></span>synced</span>
       </div>
     </div>
     <div class="wrap head-grid">
       <a class="brand" href="/" aria-label="linkedwallets — home">
-        <svg class="brand-mark" width="22" height="22" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-          <path d="M32 32 L14 16 M32 32 L50 16 M32 32 L32 50" stroke="#74808e" stroke-width="4"/>
-          <circle cx="14" cy="16" r="6" fill="#0b0e12" stroke="#74808e" stroke-width="4"/>
-          <circle cx="50" cy="16" r="6" fill="#0b0e12" stroke="#74808e" stroke-width="4"/>
-          <circle cx="32" cy="50" r="6" fill="#0b0e12" stroke="#74808e" stroke-width="4"/>
-          <circle cx="32" cy="32" r="7" fill="#f2c14e"/>
+        <svg class="brand-mark" width="24" height="24" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+          <path d="M32 32 L14 16 M32 32 L50 16 M32 32 L32 50" stroke="#121211" stroke-width="4"/>
+          <circle cx="14" cy="16" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
+          <circle cx="50" cy="16" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
+          <circle cx="32" cy="50" r="6" fill="#e9e6dd" stroke="#121211" stroke-width="4"/>
+          <circle cx="32" cy="32" r="8" fill="#2a43dc" stroke="#121211" stroke-width="3"/>
         </svg>
         linkedwallets
       </a>
       <nav class="site-nav" aria-label="Site">
         <a href="/writings/">Writings</a>
         <a href="/projects/">Projects</a>
-        <a class="ext" href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X</a>
+        <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
       </nav>
-      <div class="head-side">
-        <form class="search" role="search" aria-label="Search this site">
-          <input type="text" name="q" placeholder="search tx / address…" aria-label="Search this site" autocomplete="off">
-        </form>
-      </div>
-      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu">menu</button>
+      <button class="k-btn" type="button" data-explorer aria-haspopup="dialog" aria-controls="explorer">
+        <span class="long">search tx / address…</span><span class="short">menu</span><kbd>⌘K</kbd>
+      </button>
     </div>
   </header>
 
-  <div class="menu-overlay" id="menu" hidden>
-    <button class="menu-btn menu-close" type="button">close ✕</button>
-    <nav aria-label="Site">
-      <a href="/"><span>0x01</span>Home</a>
-      <a href="/writings/"><span>0x02</span>Writings</a>
-      <a href="/projects/"><span>0x03</span>Projects</a>
-      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer"><span>0x04</span>X ↗</a>
-    </nav>
-    <div class="menu-foot">
-      <span>block #<span data-block>—</span></span>
-      <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">@linkedwallets</a>
+  <div class="palette" id="explorer" role="dialog" aria-modal="true" aria-label="Explorer" hidden>
+    <div class="pal-box">
+      <div class="pal-top"><span>explorer · indexes one person</span><button class="pal-x" type="button">esc ✕</button></div>
+      <input type="text" placeholder="search tx / address / page…" aria-label="Search this site" autocomplete="off" spellcheck="false">
+      <ul class="pal-list"></ul>
+      <div class="pal-foot"><span>block #<span data-block>—</span></span><span>↑↓ move · ↵ open</span></div>
     </div>
   </div>
 
   <main id="main">
     <section class="hero wrap">
-      <p class="eyebrow">an explorer for one person</p>
-      <h1 class="display">linked<span class="it">wallets</span></h1>
-      <p class="hero-sub">One pseudonym, many addresses. Essays and small tools from a node somewhere on the network.</p>
+      <div class="hero-top">
+        <p class="eyebrow">an explorer for one person</p>
+        <p class="eyebrow">peers of 0x6c77…f21d</p>
+      </div>
+      <h1 class="display"><span class="ln">linked</span><span class="ln it">wallets</span></h1>
+      <div class="hero-row">
+        <p class="hero-sub">One pseudonym, many addresses. Essays and small tools from a node somewhere on the network.</p>
+        <p class="k-hint">press <kbd>⌘K</kbd> or <kbd>/</kbd> to search this explorer</p>
+      </div>
 
       <div class="graph-panel">
         <div class="graph-bar" aria-hidden="true">
-          <span>transfer graph · <span class="lit">peers of 0x6c77…f21d</span></span>
-          <span><span class="dot throb"></span><span class="lit">mainnet · synced</span></span>
+          <span>transfer graph <span class="opt">· hover a wallet</span></span>
+          <span><span class="lit">mainnet · synced</span></span>
         </div>
         <svg class="graph" viewBox="0 0 960 440" xmlns="http://www.w3.org/2000/svg" aria-label="A graph of wallets linked to linkedwallets by transfers">
           <title>Transfer graph: the linkedwallets address at the centre, linked to nine peer wallets.</title>
 
           <!-- edges: centre to peers -->
-          <path class="g-edge" data-link="c n1" d="M480 230 Q590 150 700 125"/>
-          <path class="g-edge" data-link="c n2" d="M480 230 Q640 215 800 265"/>
-          <path class="g-edge" data-link="c n3" d="M480 230 Q610 330 695 385"/>
-          <path class="g-edge" data-link="c n4" d="M480 230 Q508 315 480 395"/>
-          <path class="g-edge" data-link="c n5" d="M480 230 Q350 325 250 370"/>
-          <path class="g-edge" data-link="c n6" d="M480 230 Q315 200 150 225"/>
-          <path class="g-edge" data-link="c n7" d="M480 230 Q340 150 240 110"/>
-          <path class="g-edge" data-link="c n8" d="M480 230 Q438 140 400 85"/>
-          <path class="g-edge" data-link="c n9" d="M480 230 Q556 135 590 70"/>
+          <path class="g-edge" pathLength="1" data-link="c n1" d="M480 230 Q590 150 700 125"/>
+          <path class="g-edge" pathLength="1" data-link="c n2" d="M480 230 Q640 215 800 265"/>
+          <path class="g-edge" pathLength="1" data-link="c n3" d="M480 230 Q610 330 695 385"/>
+          <path class="g-edge" pathLength="1" data-link="c n4" d="M480 230 Q508 315 480 395"/>
+          <path class="g-edge" pathLength="1" data-link="c n5" d="M480 230 Q350 325 250 370"/>
+          <path class="g-edge" pathLength="1" data-link="c n6" d="M480 230 Q315 200 150 225"/>
+          <path class="g-edge" pathLength="1" data-link="c n7" d="M480 230 Q340 150 240 110"/>
+          <path class="g-edge" pathLength="1" data-link="c n8" d="M480 230 Q438 140 400 85"/>
+          <path class="g-edge" pathLength="1" data-link="c n9" d="M480 230 Q556 135 590 70"/>
           <!-- edges: peer to peer -->
-          <path class="g-edge" data-link="n1 n2" d="M700 125 Q770 170 800 265"/>
-          <path class="g-edge" data-link="n1 n8" d="M400 85 Q550 60 700 125"/>
-          <path class="g-edge" data-link="n5 n6" d="M250 370 Q182 315 150 225"/>
-          <path class="g-edge" data-link="n3 n5" d="M695 385 Q470 415 250 370"/>
-          <path class="g-edge" data-link="n7 n8" d="M240 110 Q318 72 400 85"/>
+          <path class="g-edge" pathLength="1" data-link="n1 n2" d="M700 125 Q770 170 800 265"/>
+          <path class="g-edge" pathLength="1" data-link="n1 n8" d="M400 85 Q550 60 700 125"/>
+          <path class="g-edge" pathLength="1" data-link="n5 n6" d="M250 370 Q182 315 150 225"/>
+          <path class="g-edge" pathLength="1" data-link="n3 n5" d="M695 385 Q470 415 250 370"/>
+          <path class="g-edge" pathLength="1" data-link="n7 n8" d="M240 110 Q318 72 400 85"/>
 
           <!-- transfers running along the edges -->
           <path class="g-pulse" data-link="c n1" style="animation-delay:-0.6s"  d="M480 230 Q590 150 700 125"/>
@@ -172,17 +170,26 @@
           </g>
         </svg>
       </div>
+      <div class="ledger" aria-label="This explorer in numbers">
+        <div><b>9</b><span>peer wallets</span></div>
+        <div><b>14</b><span>transfers drawn</span></div>
+        <div><b>3</b><span>writings</span></div>
+        <div><b>4</b><span>contracts</span></div>
+      </div>
     </section>
 
     <div class="wrap">
-      <section class="intro measure">
+      <section class="band" aria-labelledby="readme">
+        <h2 class="band-label" id="readme"><span class="n">01</span>readme</h2>
+        <div class="intro">
         <p>I go by <em>linkedwallets</em> — a handle with a key behind it. This site is the explorer for that one entity: short essays under Writings, small tools under Projects, and nothing for sale anywhere.</p>
         <p>There is no About page with a face. The paragraphs you are reading are as close to doxxing as this chain gets: a pseudonym, a way to verify it, and whatever the words turn out to be worth on their own.</p>
         <p>Everything here is static files served from a branch. No trackers, no cookies, no analytics. The only thing this site counts is blocks.</p>
+        </div>
       </section>
 
-      <section class="measure" aria-labelledby="latest">
-        <h2 class="section-label" id="latest">Latest transfers <a class="more" href="/writings/">all writings →</a></h2>
+      <section class="band" aria-labelledby="latest">
+        <h2 class="band-label" id="latest"><span class="n">02</span>Latest transfers<br><a class="more" href="/writings/">all writings →</a></h2>
         <div class="tx-list">
           <a class="tx-row" href="/writings/a-name-you-can-verify/">
             <span class="tx-hash">tx 0x7c1d…94af</span>
@@ -211,8 +218,8 @@
         </div>
       </section>
 
-      <section class="measure" aria-labelledby="contracts">
-        <h2 class="section-label" id="contracts">Deployed contracts <a class="more" href="/projects/">all projects →</a></h2>
+      <section class="band" aria-labelledby="contracts">
+        <h2 class="band-label" id="contracts"><span class="n">03</span>Deployed contracts<br><a class="more" href="/projects/">all projects →</a></h2>
         <div class="tx-list">
           <a class="tx-row" href="/projects/#sparse-forest">
             <span class="tx-hash">0x5f0e…9c02</span>
@@ -244,19 +251,30 @@
   </main>
 
   <footer class="site-foot">
-    <div class="wrap foot-grid">
-      <div class="who">linkedwallets — pseudonymous by design, signed by default.</div>
-      <div class="foot-links">
-        <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
-        <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
+    <div class="wrap">
+      <div class="foot-top">
+        <p class="foot-who">linkedwallets — pseudonymous by design, signed by default.</p>
+        <div class="foot-col">
+          <h3>index</h3>
+          <a href="/">Home</a>
+          <a href="/writings/">Writings</a>
+          <a href="/projects/">Projects</a>
+        </div>
+        <div class="foot-col">
+          <h3>elsewhere</h3>
+          <a href="https://x.com/linkedwallets" target="_blank" rel="noopener noreferrer">X ↗</a>
+          <a href="https://github.com/linkedwallets/linkedwallets.github.io" target="_blank" rel="noopener noreferrer">source ↗</a>
+        </div>
       </div>
-    </div>
-    <div class="foot-strip">
-      <div class="wrap">
-        <span>block #<span data-block>—</span></span>
+      <div class="foot-block" aria-hidden="true">
+        <span class="lbl">current block</span>
+        <span class="num" data-block>—</span>
+      </div>
+      <div class="foot-strip">
         <span><span class="dot throb"></span>synced</span>
         <span>no cookies · no analytics</span>
         <span>hand-rolled html</span>
+        <span>⌘K to search</span>
       </div>
     </div>
   </footer>

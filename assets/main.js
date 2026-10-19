@@ -1,4 +1,4 @@
-// linkedwallets.github.io — the chain ticks, the menu opens, the search jokes.
+// linkedwallets.github.io — the chain ticks, the ⌘K explorer searches one person, the graph lights up.
 
 (function () {
   "use strict";
@@ -31,65 +31,114 @@
   tickChain();
   setInterval(tickChain, 1000);
 
-  // Mobile menu.
-  var menuBtn = document.querySelector(".menu-btn");
-  var menu = document.getElementById("menu");
+  // The explorer: a ⌘K palette that indexes exactly one person. It is also the menu.
+  var INDEX = [
+    ["Home", "/", "0x01"],
+    ["Writings", "/writings/", "0x02"],
+    ["A name you can verify", "/writings/a-name-you-can-verify/", "tx"],
+    ["Notes on block space", "/writings/notes-on-block-space/", "tx"],
+    ["Change addresses", "/writings/change-addresses/", "tx"],
+    ["Projects", "/projects/", "0x03"],
+    ["sparse-forest", "/projects/#sparse-forest", "ct"],
+    ["mempool.weather", "/projects/#mempool-weather", "ct"],
+    ["dust", "/projects/#dust", "ct"],
+    ["hexwords", "/projects/#hexwords", "ct"],
+    ["X ↗ @linkedwallets", "https://x.com/linkedwallets", "0x04"],
+    ["source ↗", "https://github.com/linkedwallets/linkedwallets.github.io", "src"],
+  ];
 
-  function closeMenu() {
-    if (!menu) return;
-    menu.hidden = true;
-    document.body.classList.remove("menu-open");
-    menuBtn.setAttribute("aria-expanded", "false");
-  }
+  var pal = document.getElementById("explorer");
+  var openers = document.querySelectorAll("[data-explorer]");
 
-  if (menuBtn && menu) {
-    menuBtn.addEventListener("click", function () {
-      var open = menu.hidden;
-      menu.hidden = !open;
-      document.body.classList.toggle("menu-open", open);
-      menuBtn.setAttribute("aria-expanded", String(open));
-      if (open) menu.querySelector("nav a").focus();
-    });
-    var closeBtn = menu.querySelector(".menu-close");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", closeMenu);
-    }
-    menu.addEventListener("click", function (e) {
-      if (e.target.closest("a")) closeMenu();
-    });
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeMenu();
-    });
-  }
+  if (pal) {
+    var input = pal.querySelector("input");
+    var list = pal.querySelector(".pal-list");
+    var lastFocus = null;
+    var sel = 0;
+    var hits = INDEX;
 
-  // The explorer search: it indexes exactly one person.
-  var search = document.querySelector(".search");
-  if (search) {
-    var input = search.querySelector("input");
-    var msg = document.querySelector(".search-msg");
-    var routes = {
-      home: "/",
-      writings: "/writings/",
-      projects: "/projects/",
-      x: "https://x.com/linkedwallets",
-    };
-    var timer = null;
-
-    search.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var q = (input.value || "").trim().toLowerCase();
-      if (!q) return;
-      if (routes[q]) {
-        window.location.href = routes[q];
+    function render() {
+      var q = input.value.trim().toLowerCase();
+      hits = INDEX.filter(function (it) {
+        return !q || it[0].toLowerCase().indexOf(q) !== -1 || it[1].indexOf(q) !== -1;
+      });
+      if (sel >= hits.length) sel = 0;
+      list.innerHTML = "";
+      if (!hits.length) {
+        var none = document.createElement("li");
+        none.className = "pal-none";
+        none.textContent = "0 results — this explorer indexes one person";
+        list.appendChild(none);
         return;
       }
-      if (msg) {
-        msg.textContent = "0 results — this explorer indexes one person";
-        msg.hidden = false;
-        clearTimeout(timer);
-        timer = setTimeout(function () {
-          msg.hidden = true;
-        }, 3000);
+      hits.forEach(function (it, i) {
+        var li = document.createElement("li");
+        var a = document.createElement("a");
+        a.href = it[1];
+        if (it[1].indexOf("http") === 0) {
+          a.target = "_blank";
+          a.rel = "noopener noreferrer";
+        }
+        a.innerHTML = "<span></span><b></b>";
+        a.firstChild.textContent = it[2];
+        a.lastChild.textContent = it[0];
+        if (i === sel) a.className = "sel";
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+    }
+
+    function open() {
+      lastFocus = document.activeElement;
+      pal.hidden = false;
+      document.body.classList.add("pal-open");
+      input.value = "";
+      sel = 0;
+      render();
+      input.focus();
+    }
+
+    function close() {
+      pal.hidden = true;
+      document.body.classList.remove("pal-open");
+      if (lastFocus) lastFocus.focus();
+    }
+
+    for (var o = 0; o < openers.length; o++) {
+      openers[o].addEventListener("click", open);
+    }
+
+    input.addEventListener("input", function () {
+      sel = 0;
+      render();
+    });
+
+    pal.addEventListener("click", function (e) {
+      if (e.target === pal || e.target.closest("a, .pal-x")) close();
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        pal.hidden ? open() : close();
+        return;
+      }
+      if (e.key === "/" && pal.hidden && !/input|textarea/i.test(document.activeElement.tagName)) {
+        e.preventDefault();
+        open();
+        return;
+      }
+      if (pal.hidden) return;
+      if (e.key === "Escape") close();
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        if (!hits.length) return;
+        sel = (sel + (e.key === "ArrowDown" ? 1 : hits.length - 1)) % hits.length;
+        render();
+      }
+      if (e.key === "Enter" && e.target === input && hits[sel]) {
+        e.preventDefault();
+        list.querySelectorAll("a")[sel].click();
       }
     });
   }
@@ -109,18 +158,16 @@
 
     var nodes = svg.querySelectorAll(".g-node");
     for (var k = 0; k < nodes.length; k++) {
-      var node = nodes[k];
-      var id = node.getAttribute("data-node");
-      node.addEventListener("mouseenter", function () {
+      nodes[k].addEventListener("mouseenter", function () {
         setHot(this.getAttribute("data-node"));
       });
-      node.addEventListener("mouseleave", function () {
+      nodes[k].addEventListener("mouseleave", function () {
         setHot(null);
       });
-      node.addEventListener("focus", function () {
+      nodes[k].addEventListener("focus", function () {
         setHot(this.getAttribute("data-node"));
       });
-      node.addEventListener("blur", function () {
+      nodes[k].addEventListener("blur", function () {
         setHot(null);
       });
     }
